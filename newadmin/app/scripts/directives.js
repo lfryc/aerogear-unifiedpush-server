@@ -17,9 +17,12 @@ angular.module('ups.directives', [])
     .directive('variants', function () {
         return {
             scope: {
-                variants: '='
+                variants: '=',
+                type: '@'
             },
-            controller: 'DetailController',
+//            controller: function($scope) {
+//                $scope.removeVariant = $scope.$parent.removeVariant;
+//            },
             templateUrl: 'directives/variant-details.html'
         };
     });
