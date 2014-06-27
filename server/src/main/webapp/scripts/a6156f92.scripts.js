@@ -725,8 +725,8 @@ angular.module('upsConsole').controller('ComposeController', function($rootScope
   $scope.variantSelection = [];
   $scope.criteria = [];
 
-  $scope.sendMessage = function () {
-    var pushData = {'message': {'sound': 'default', 'alert': $scope.testMessage}};
+  $scope.sendMessage = function (testMessage) {
+    var pushData = {'message': {'sound': 'default', 'alert': testMessage}};
 
     //let's check if we filter variants
     if($scope.variantSelection.length > 0) {
