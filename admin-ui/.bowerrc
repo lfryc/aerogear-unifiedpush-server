@@ -1,4 +1,4 @@
 {
     "directory": "app/bower_components",
-    "storage":{ "packages":"./local_cache"
+    "storage":{ "packages":"./local_cache" }
 }
