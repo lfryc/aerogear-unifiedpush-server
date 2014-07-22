@@ -31,13 +31,14 @@ import java.util.Set;
 public class AerogearThemeProvider implements ThemeProvider {
 
     public static final String AEROGEAR = "aerogear";
+    public static final String LIVEOAK = "liveoak";
 
     private static Set<String> ACCOUNT_THEMES = new HashSet<String>();
     private static Set<String> LOGIN_THEMES = new HashSet<String>();
     private static Set<String> ADMIN_THEMES = new HashSet<String>();
 
     static {
-        Collections.addAll(ACCOUNT_THEMES, AEROGEAR);
+        Collections.addAll(ACCOUNT_THEMES, AEROGEAR, LIVEOAK);
         Collections.addAll(LOGIN_THEMES, AEROGEAR);
         Collections.addAll(ADMIN_THEMES, AEROGEAR);
     }
