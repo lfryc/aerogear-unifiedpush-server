@@ -1,9 +1,1 @@
-#kc-logo-wrapper {
-    background-image: url("../img/logo.png");
-    background-repeat: no-repeat;
-    background-position: top right;
-
-    height: 65px;
-
-    margin: 100px;
-}
+@import url("/ag-push/styles/login.css");
