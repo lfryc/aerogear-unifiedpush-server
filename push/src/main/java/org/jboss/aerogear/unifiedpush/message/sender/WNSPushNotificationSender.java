@@ -28,18 +28,23 @@ import org.jboss.aerogear.unifiedpush.service.ClientInstallationService;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.core.UriBuilder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @SenderType(WindowsVariant.class)
 public class WNSPushNotificationSender implements PushNotificationSender {
-
     private final Logger logger = Logger.getLogger(APNsPushNotificationSender.class.getName());
+
+    private static final String PAGE_KEY = "page";
+    private static final String CORDOVA = "cordova";
+    static final String CORDOVA_PAGE = "/Plugins/org.jboss.aerogear.cordova.push/P.xaml";
 
     @Inject
     private ClientInstallationService clientInstallationService;
@@ -52,10 +57,9 @@ public class WNSPushNotificationSender implements PushNotificationSender {
         }
 
         final WindowsVariant windowsVariant = (WindowsVariant) variant;
-        WnsService wnsService = new WnsService(windowsVariant.getSid(), windowsVariant.getClientSecret(), true);
+        WnsService wnsService = new WnsService(windowsVariant.getSid(), windowsVariant.getClientSecret(), false);
 
-        //simple initial version just send toast message
-        WnsToast toast =  new WnsToastBuilder().bindingTemplateToastText01(pushMessage.getAlert()).build();
+        WnsToast toast = createToastMessage(pushMessage);
         try {
             Set<String> expiredClientIdentifiers = new HashSet<String>(clientIdentifiers.size());
             final List<WnsNotificationResponse> responses = wnsService.pushToast(new ArrayList<String>(clientIdentifiers), toast);
@@ -74,5 +78,20 @@ public class WNSPushNotificationSender implements PushNotificationSender {
 
         logger.log(Level.INFO, "Message to WNS has been submitted");
         senderCallback.onSuccess();
+    }
+
+    WnsToast createToastMessage(UnifiedPushMessage pushMessage) {
+        final WnsToastBuilder builder = new WnsToastBuilder().bindingTemplateToastText01(pushMessage.getAlert());
+        final Map<String, Object> data = pushMessage.getData();
+        final String page = (String) data.remove(PAGE_KEY);
+        if (page != null) {
+            final UriBuilder uriBuilder = UriBuilder.fromPath("");
+            for (Map.Entry<String, Object> entry : data.entrySet()) {
+                uriBuilder.queryParam(entry.getKey(), entry.getValue());
+            }
+            final String query = uriBuilder.build().getQuery();
+            builder.launch(CORDOVA.equals(page) ? CORDOVA_PAGE : page + "?" + query);
+        }
+        return builder.build();
     }
 }
