@@ -99,6 +99,11 @@
             <artifactId>java-wns</artifactId>
             <version>1.2</version>
         </dependency>
+        <dependency>
+            <groupId>com.notnoop.mpns</groupId>
+            <artifactId>mpns</artifactId>
+            <version>0.0.2</version>
+        </dependency>
     </dependencies>
 
     <profiles>
