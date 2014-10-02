@@ -42,6 +42,6 @@
 
     </table>
 
-    <a id="logout-all-sessions" href="${url.sessionsLogoutUrl}">Logout all sessions</a>
+    <a id="logout-all-sessions" href="${url.sessionsLogoutUrl}">Log out all sessions</a>
 
 </@layout.mainLayout>
