@@ -187,7 +187,7 @@ public class PushApplication extends Application {
         [NSURL URLWithString:@"{{ currentLocation }}"]];
 
    [registration registerWithClientInfo:^(id clientInfo) {
-     
+
      // apply the token, to identify this device
      [clientInfo setDeviceToken:deviceToken];
 
@@ -220,7 +220,7 @@ func application(application: UIApplication!, didRegisterForRemoteNotificationsW
     let registration = AGDeviceRegistration(serverURL: NSURL(string: "{{ currentLocation }}"))
 
     registration.registerWithClientInfo({ (clientInfo: AGClientDeviceInformation!)  in
-        
+
         // apply the token, to identify this device
         clientInfo.deviceToken = deviceToken
 
@@ -229,7 +229,7 @@ func application(application: UIApplication!, didRegisterForRemoteNotificationsW
 
         // --optional config--
         // set some 'useful' hardware information params
-        let currentDevice = UIDevice()        
+        let currentDevice = UIDevice()
         clientInfo.operatingSystem = currentDevice.systemName
         clientInfo.osVersion = currentDevice.systemVersion
         clientInfo.deviceType = currentDevice.model
@@ -249,7 +249,7 @@ func application(application: UIApplication!, didRegisterForRemoteNotificationsW
                     <div class="ups-code-block js" hljs compile="true">
 var pushConfig = {
    pushServerURL: "{{ currentLocation }}",
-   {{variant.type}}: {
+   {{ cordovaVariantType(variant) }}: {
       {{ projectNumber(variant) }}
       variantID: "{{ variant.variantID }}",
       variantSecret: "{{ variant.secret }}"
