@@ -38,6 +38,7 @@ angular.module('upsConsole').controller('ComposeController', function($rootScope
     pushData.deviceType = undefined;
     pushData.categories = undefined;
     pushData.variants = undefined;
+    pushData['simple-push'] = '';
     //let's check if we filter variants
     if($scope.variantSelection.length > 0) {
       pushData.variants = [];
