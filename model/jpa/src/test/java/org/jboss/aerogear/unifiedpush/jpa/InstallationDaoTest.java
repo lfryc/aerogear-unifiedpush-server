@@ -16,12 +16,29 @@
  */
 package org.jboss.aerogear.unifiedpush.jpa;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.fail;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceException;
+import javax.persistence.RollbackException;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+
 import org.jboss.aerogear.unifiedpush.api.AndroidVariant;
 import org.jboss.aerogear.unifiedpush.api.Category;
 import org.jboss.aerogear.unifiedpush.api.Installation;
 import org.jboss.aerogear.unifiedpush.api.PushApplication;
 import org.jboss.aerogear.unifiedpush.api.SimplePushVariant;
-import org.jboss.aerogear.unifiedpush.api.WindowsVariant;
+import org.jboss.aerogear.unifiedpush.api.WindowsWNSVariant;
 import org.jboss.aerogear.unifiedpush.api.iOSVariant;
 import org.jboss.aerogear.unifiedpush.dao.PageResult;
 import org.jboss.aerogear.unifiedpush.jpa.dao.impl.JPAInstallationDao;
@@ -31,22 +48,6 @@ import org.jboss.aerogear.unifiedpush.utils.TestUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.PersistenceException;
-import javax.persistence.RollbackException;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.fail;
 
 public class InstallationDaoTest {
 
@@ -430,7 +431,7 @@ public class InstallationDaoTest {
         installation.setDeviceToken("https://db3.notify.windows.com/?token=AgYAAACH%2fZixlZK4v%2bkD3LFiz7zHOJm13"
                 + "smBVRn8rH%2b32Xu6tv3fj%2fh8bb4VhNTS7NqS8TclpW044YxAbaN%2bB4NjpyVSZs3He7SwwjExbEsBFRLYc824%2f0"
                 + "615fPox8bwoxrTU%3d");
-        
+
         final WindowsWNSVariant variant = new WindowsWNSVariant();
         variant.setClientSecret("12");
         variant.setSid("12");
