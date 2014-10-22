@@ -72,7 +72,7 @@ public class DeviceTokenValidator implements ConstraintValidator<DeviceTokenChec
             case SIMPLE_PUSH:
                 return SIMPLE_PUSH_DEVICE_TOKEN.matcher(deviceToken).matches();
         }
-        return false;
+        return true;
     }
 
 }
