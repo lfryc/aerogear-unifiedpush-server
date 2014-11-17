@@ -77,7 +77,7 @@
             "publicClient": true,
             "baseUrl": "/ag-push",
             "redirectUris": [
-                "/ag-push/*"
+                "http://localhost:8080/ag-push/*"
             ]
         }
     ]

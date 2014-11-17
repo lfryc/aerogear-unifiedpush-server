@@ -1,7 +1,8 @@
 {
     "realm" : "aerogear",
-    "auth-server-url" : "/auth",
+    "auth-server-url" : "http://10.0.1.8:8080/auth",
     "ssl-required" : "external",
     "resource" : "unified-push-server-js",
-    "public-client" : true
+    "public-client" : true,
+    "realm-public-key" : "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCszB+JMUkREQKEXEwKfoNRxsk9b82ZDu8XHcnnrKC96zU/lvgF64Wv2u3V/aaJJGKdXcHKZhEmHhlRkcSI580ZJ6F64VkYhFYWmKHhNNvJwNngxp5Ws5Minb+vX3miLlWYhV0UOwlz6NcMLZi31gGQSaqrBLVSQuqyRXD2hyIfdQIDAQAB"
 }
