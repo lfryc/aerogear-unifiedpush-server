@@ -56,6 +56,7 @@
         <module>admin-ui</module>
         <module>dependencies</module>
         <module>servers</module>
+        <module>keycloak-bootstrap</module>
     </modules>
 
     <dependencyManagement>

@@ -13,42 +13,46 @@
     "accountTheme": "aerogear",
     "loginTheme": "aerogear",
     "updateProfileOnInitialSocialLogin": false,
-    "requiredCredentials": [ "password" ],
-    "users" : [
+    "requiredCredentials": ["password"],
+    "users": [
         {
-            "username" : "admin",
+            "username": "admin",
             "enabled": true,
-            "credentials" : [
-                { "type" : "password",
-                    "value" : "123" }
+            "credentials": [
+                {
+                    "type": "password",
+                    "value": "123"
+                }
             ],
             "requiredActions": [
                 "UPDATE_PASSWORD"
             ],
-            "realmRoles": [ "admin" ],
+            "realmRoles": ["admin"],
             "applicationRoles": {
-               "realm-management": [ "realm-admin" ],
-               "account": [ "manage-account" ]
+                "realm-management": ["realm-admin"],
+                "account": ["manage-account"]
             }
         },
         {
-            "username" : "developer",
+            "username": "developer",
             "enabled": false,
-            "credentials" : [
-                { "type" : "password",
-                    "value" : "developer" }
+            "credentials": [
+                {
+                    "type": "password",
+                    "value": "developer"
+                }
             ],
             "requiredActions": [
                 "UPDATE_PASSWORD"
             ],
-            "realmRoles": [ "developer" ],
+            "realmRoles": ["developer"],
             "applicationRoles": {
-                "account": [ "manage-account" ]
+                "account": ["manage-account"]
             }
         }
     ],
-    "roles" : {
-        "realm" : [
+    "roles": {
+        "realm": [
             {
                 "name": "admin",
                 "description": "Administrator privileges"
@@ -62,7 +66,10 @@
     "scopeMappings": [
         {
             "client": "unified-push-server-js",
-            "roles": ["admin", "developer"]
+            "roles": [
+                "admin",
+                "developer"
+            ]
         }
     ],
     "applications": [
@@ -81,4 +88,5 @@
             ]
         }
     ]
+}
 }

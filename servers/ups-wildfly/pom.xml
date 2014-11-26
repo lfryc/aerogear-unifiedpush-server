@@ -38,6 +38,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.jboss.aerogear.unifiedpush</groupId>
+            <artifactId>keycloak-bootstrap</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
           <groupId>org.keycloak</groupId>
           <artifactId>keycloak-wildfly-adapter</artifactId>
         </dependency>

@@ -6,6 +6,10 @@
 
     <module-name>ag-push</module-name>
 
+    <listener>
+        <listener-class>org.jboss.aerogear.unifiedpush.bootstrap.KeycloakBootstrapListener</listener-class>
+    </listener>
+
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>Admin</web-resource-name>

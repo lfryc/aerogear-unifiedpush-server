@@ -22,7 +22,12 @@
   var auth = {};
 
   angular.element(document).ready(function () {
-    var keycloak = new Keycloak('config/admin-ui-keycloak.json');
+    var keycloak = new Keycloak({
+      url: 'http://10.0.1.7:8080/auth',
+      realm: 'aerogear',
+      clientId: 'unified-push-server-js'
+    });
+
     auth.loggedIn = false;
 
     keycloak.init({ onLoad: 'login-required' }).success(function () {
