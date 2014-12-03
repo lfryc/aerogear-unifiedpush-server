@@ -23,7 +23,7 @@
 
   angular.element(document).ready(function () {
     var keycloak = new Keycloak({
-      url: 'http://10.0.1.7:8080/auth',
+      url: 'http://localhost:8080/auth',
       realm: 'aerogear',
       clientId: 'unified-push-server-js'
     });
