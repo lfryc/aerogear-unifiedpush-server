@@ -34,6 +34,23 @@ module.exports = function (grunt) {
       home: './',
       jbossweb: '../servers/ups-server/target/ag-push'
     },
+    babel: {
+      options: {
+        sourceMap: true
+      },
+      tmp: {
+        //files: {
+        //  '<%= yeoman.tmp %>/scripts/**.js': '<%= yeoman.app %>/scripts/**.es6'
+        //}
+        files: [{
+          "expand": true,
+          "cwd": "<%= yeoman.app %>/scripts/",
+          "src": ["**/*.es6"],
+          "dest": "<%= yeoman.tmp %>/scripts/",
+          "ext": ".js"
+        }]
+      }
+    },
     less: {
       main: {
         options: {
@@ -60,6 +77,10 @@ module.exports = function (grunt) {
     watch: {
       options: {
         nospawn: true
+      },
+      babel: {
+        files: '<%= yeoman.app %>/scripts/*.es6',
+        tasks: ['babel', 'newer:copy:jbossweb']
       },
       less: {
         files: '<%= yeoman.app %>/styles/*.less',
