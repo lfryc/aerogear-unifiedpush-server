@@ -12,7 +12,6 @@
     'ups.directives',
     'patternfly.notification',
     'patternfly.autofocus',
-    'hljs',
     'ngIdle'
   ]);
 
@@ -54,7 +53,7 @@
 
   var appConfig = {
     logDebugEnabled: false,
-    idleDuration: 300,
+    idleDuration: 6000,
     idleWarningDuration : 30,
     keepaliveInterval: 5
   };
