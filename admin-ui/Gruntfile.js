@@ -108,14 +108,10 @@ module.exports = function (grunt) {
         options: {
           'force': true
         },
-        files: [
-          {
-            src: [
-              '<%= local.jbossweb %>/*',
-              '!<%= local.jbossweb %>/WEB-INF',
-              '!<%= local.jbossweb %>/META-INF'
-            ]
-          }
+        src: [
+          '<%= local.jbossweb %>/*',
+          '!<%= local.jbossweb %>/WEB-INF',
+          '!<%= local.jbossweb %>/META-INF'
         ]
       },
       server: '.tmp'

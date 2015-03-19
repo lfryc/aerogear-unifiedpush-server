@@ -35,96 +35,339 @@
     <!-- endbuild -->
 
 </head>
-<body class="app-dashboard"  ng-controller="RootController as rootCtrl">
+<body class="app-dashboard">
 
-<div class="idlebox ng-cloak"
-      ng-hide="rootCtrl.idleCountdown > rootCtrl.appConfig.idleWarningDuration">
-	You will be logged off in {{ rootCtrl.idleCountdown }}&nbsp;seconds due to inactivity.
-</div>
-
-<!--[if lt IE 9]>
-<script src="bower_components/es5-shim/es5-shim.js"></script>
-<script src="bower_components/json3/lib/json3.min.js"></script>
-<![endif]-->
-<div class="feedback-aligner ng-cloak" >
-  <div class="row" ng-repeat="notification in notifications.data" data-ng-show="notifications.data.length > 0">
-    <div class="alert alert-{{notification.type}} alert-dismissable" ng-click="notifications.remove($index)" style="margin-bottom:1em">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-        <span class="pficon pficon-close"></span>
-      </button>
-      <span class="pficon pficon-ok" ng-show="notification.type == 'success'"></span>
-      <span class="pficon pficon-info" ng-show="notification.type == 'info'"></span>
-                <span class="pficon-layered" ng-show="notification.type == 'danger'">
-                    <span class="pficon pficon-error-octagon"></span>
-                    <span class="pficon pficon-error-exclamation"></span>
-                </span>
-                <span class="pficon-layered" ng-show="notification.type == 'warning'">
-                    <span class="pficon pficon-warning-triangle"></span>
-                    <span class="pficon pficon-warning-exclamation"></span>
-                </span>
-      <strong>{{notification.header}}</strong> {{notification.message}}
-    </div>
+<div class="ups-main-warning">
+  <div class="alert alert-warning alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+      <span class="pficon pficon-close"></span>
+    </button>
+            <span class="pficon-layered">
+              <span class="pficon pficon-warning-triangle"></span>
+              <span class="pficon pficon-warning-exclamation"></span>
+            </span>
+    <strong>Main console alerts goes here!</strong> We are not really sure, but <a href="#" class="alert-link">it might be bad</a>.
   </div>
-  <div class="row" ng-show="isProcessingData()">
-    <div class="alert alert-info alert-dismissable" ng-click="notifications.remove($index)" style="margin-bottom:1em">
-      <span class="pficon spinner spinner-sm spinner-inline" style="top: 8px; left: 8px;"></span>
-      <strong>Processing...</strong>
-    </div>
+</div><!-- ups main warning-->
+
+
+
+<nav class="navbar navbar-default navbar-pf" role="navigation">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="index.html">
+      <img src="img/brand.svg" alt="Aerogear" />
+    </a>
   </div>
-</div>
+  <div class="collapse navbar-collapse navbar-collapse-1">
+    <ul class="nav navbar-nav navbar-utility">
+      <li class="dropdown">
+        <a href="#" data-toggle="dropdown">
+          <span class="pficon pficon-info"></span>
+          Warnings: <strong>2</strong>
+        </a>
+        <div class="dropdown-menu infotip bottom-right">
+          <div class="arrow"></div>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <span class="i pficon pficon-info"></span>
+              Added Datasources TestDS
+            </li>
+            <li class="list-group-item">
+              <span class="i pficon pficon-info"></span>
+              Modified Datasources ExampleDS
+            </li>
+          </ul>
+          <div class="footer"><a href="#">Clear Warnings</a></div>
+        </div>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          <span class="pficon pficon-user"></span>
+          Brian Johnson <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li>
+            <a href="#">Accont management</a>
+          </li>
+          <li class="divider"></li>
+          <li>
+            <a href="#">Logout</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="collapse navbar-collapse navbar-collapse-1">
+  </div>
+</nav>
 
-<div class="row">
-    <header>
-        <nav class="navbar navbar-default navbar-pf ng-cloak">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#/">
-                    <h1>AeroGear UnifiedPush Server</h1>
-                </a>
+
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-8 col-md-9">
+
+
+      <div class="page-header page-header-bleed-right">
+        <div class="actions pull-right">
+          <a href="wizard01-welcome.html" class="btn btn-primary ups-create-app-btn"><span class="pficon pficon-add"></span> Create Application</a>
+        </div>
+        <h1>Applications</h1>
+      </div>
+
+
+      <div class="ups-sub-header">
+
+        <form role="form" class="search-pf has-button">
+          <div class="form-group has-clear">
+            <div class="search-pf-input-group">
+              <label for="search1" class="sr-only">Search</label>
+              <input id="search1" type="search" class="form-control" placeholder="Search">
+              <button type="button" class="clear" aria-hidden="true"><span class="pficon pficon-close"></span></button>
             </div>
-            <div class="collapse navbar-collapse" ng-class="{'in':!navCollapsed}">
-                <ul class="nav navbar-nav navbar-utility">
-                    <li class="dropdown">
-                        <a href="#" class="lo-user dropdown-toggle ng-binding" data-toggle="dropdown">
-                          <span class="pficon pficon-user"></span>
-                            {{rootCtrl.username}} <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="#" ng-click="rootCtrl.accountManagement()">Account Management</a>
-                            </li>
-                            <li>
-                                <a href="#" ng-click="rootCtrl.logout()">Log Out</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-default" type="button"><span class="fa fa-search"></span></button>
+          </div>
+        </form>
+
+
+
+
+      </div><!-- subheader -->
+
+
+      <ul class="media-list ups-app-stream">
+
+        <li class="media">
+          <div class="actions">
+            <ul class="list-inline">
+              <li><a href="#"><span class="pficon pficon-edit"></span> Change name</a></li>
+              <li class="danger"><a href="#"><span class="pficon pficon-delete"></span> Delete</a></li>
+            </ul>
+          </div>
+
+
+          <a href="app-detail-variants.html">
+            <div class="media-left">
+              <div class="app-icon">A</div>
             </div>
-        </nav>
-    </header>
-</div>
 
-<!-- ngView:  -->
-<div class="row lo-main-pane lo-content-row ups-main-pane ng-scope" >
-  <ups-navigation current="{{$rootScope.section}}"></ups-navigation>
+            <div class="media-body">
 
-  <ng-view ng-show="!isViewLoading"></ng-view>
-  <div ng-include="'views/loading.html'" ng-show="$rootScope.isViewLoading"></div>
-</div>
+              <h2 class="media-heading">Application One <small></small></h2>
+              <ul class="list-inline">
+                <li><span class="pficon pficon-user"></span> created by  <strong>username</strong></li>
+                <li><i class="fa fa-code-fork"></i> <strong>3</strong> variants</li>
+                <li><span class="pficon pficon-messages"></span> <strong>725</strong> notifications delivered</li>
+                <li><i class="fa fa-mobile"></i> <strong>92</strong> devices registered</li>
+              </ul>
+
+
+            </div>
+          </a>
+
+        </li>
+
+
+        <li class="media">
+          <div class="actions pull-right">
+            <ul class="list-inline">
+              <li><a href="#"><span class="pficon pficon-edit"></span> Change name</a></li>
+              <li class="danger"><a href="#"><span class="pficon pficon-delete"></span> Delete</a></li>
+            </ul>
+          </div>
+
+          <a href="#">
+            <div class="media-left">
+              <div class="app-icon">N</div>
+            </div>
+
+            <div class="media-body">
+              <h2 class="media-heading">Name of the Application</h2>
+              <ul class="list-inline">
+                <li><span class="pficon pficon-user"></span> created by  <strong>username</strong></li>
+                <li><i class="fa fa-code-fork"></i> <strong>3</strong> variants</li>
+                <li><span class="pficon pficon-messages"></span> <strong>725</strong> notifications delivered</li>
+                <li><i class="fa fa-mobile"></i> <strong>92</strong> devices registered</li>
+              </ul>
+            </div>
+          </a>
+        </li>
+
+
+        <li class="media">
+
+          <div class="actions pull-right">
+            <ul class="list-inline">
+              <li><a href="#"><span class="pficon pficon-edit"></span> Change name</a></li>
+              <li class="danger"><a href="#"><span class="pficon pficon-delete"></span> Delete</a></li>
+            </ul>
+          </div>
+
+          <a href="#">
+            <div class="media-left">
+              <div class="app-icon">B</div>
+            </div>
+
+            <div class="media-body">
+              <h2 class="media-heading">Best App ever</h2>
+              <ul class="list-inline">
+                <li><span class="pficon pficon-user"></span> created by  <strong>username</strong></li>
+                <li><i class="fa fa-code-fork"></i> <strong>3</strong> variants</li>
+                <li><span class="pficon pficon-messages"></span> <strong>725</strong> notifications delivered</li>
+                <li><i class="fa fa-mobile"></i> <strong>92</strong> devices registered</li>
+              </ul>
+            </div>
+          </a>
+        </li>
+
+
+        <li class="media">
+
+          <div class="actions pull-right">
+            <ul class="list-inline">
+              <li><a href="#"><span class="pficon pficon-edit"></span> Change name</a></li>
+              <li class="danger"><a href="#"><span class="pficon pficon-delete"></span> Delete</a></li>
+            </ul>
+          </div>
+
+          <a href="#">
+            <div class="media-left">
+              <div class="app-icon">S</div>
+            </div>
+
+            <div class="media-body">
+              <h2 class="media-heading">Shot n' Share App</h2>
+              <ul class="list-inline">
+                <li><span class="pficon pficon-user"></span> created by  <strong>username</strong></li>
+                <li><i class="fa fa-code-fork"></i> <strong>3</strong> variants</li>
+                <li><span class="pficon pficon-messages"></span> <strong>725</strong> notifications delivered</li>
+                <li><i class="fa fa-mobile"></i> <strong>92</strong> devices registered</li>
+              </ul>
+            </div>
+          </a>
+        </li>
+
+
+
+        <li class="media">
+          <div class="actions">
+            <ul class="list-inline">
+              <li><a href="#"><span class="pficon pficon-edit"></span> Change name</a></li>
+              <li class="danger"><a href="#"><span class="pficon pficon-delete"></span> Delete</a></li>
+            </ul>
+          </div>
+
+          <a href="#">
+            <div class="media-left">
+              <div class="app-icon">T</div>
+            </div>
+
+            <div class="media-body">
+              <h2 class="media-heading">This is my App</h2>
+              <ul class="list-inline">
+                <li><span class="pficon pficon-user"></span> created by  <strong>username</strong></li>
+                <li><i class="fa fa-code-fork"></i> <strong>3</strong> variants</li>
+                <li><span class="pficon pficon-messages"></span> <strong>725</strong> notifications delivered</li>
+                <li><i class="fa fa-mobile"></i> <strong>92</strong> devices registered</li>
+              </ul>
+            </div>
+          </a>
+        </li>
+
+      </ul>
+
+
+
+
+      <ul class="pagination">
+        <li>
+          <a href="#">
+            <span class="i fa fa-angle-left"></span>
+          </a>
+        </li>
+        <li>
+          <a href="#">1</a>
+        </li>
+        <li>
+          <a href="#">2</a>
+        </li>
+        <li>
+          <a href="#">3</a>
+        </li>
+        <li>
+          <a href="#">4</a>
+        </li>
+        <li>
+          <a href="#">5</a>
+        </li>
+        <li>
+          <a href="#">
+            <span class="i fa fa-angle-right"></span>
+          </a>
+        </li>
+      </ul>
+
+    </div><!-- /col -->
+
+
+    <div class="col-sm-4 col-md-3 sidebar-pf sidebar-pf-right">
+
+
+
+      <div class="sidebar-header sidebar-header-bleed-left sidebar-header-bleed-right">
+        <h2 class="h5">General Statistics</h2>
+      </div>
+      <ul class="list-unstyled ups-statistics">
+        <li><span>6</span>Apps</li>
+        <li><span>725</span>Delivered</li>
+        <li><span>92</span>Devices</li>
+      </ul>
+
+
+
+      <div class="sidebar-header sidebar-header-bleed-left sidebar-header-bleed-right">
+        <h2 class="h5">Latest Notifications</h2>
+      </div>
+      <div class="list-group">
+        <a href="app-detail-log.html" class="list-group-item">
+          <h3 class="list-group-item-heading">Application name</h3>
+          <p class="list-group-item-text">29 Dec, 12:12:30, 2014</p>
+        </a>
+        <a href="app-detail-log.html" class="list-group-item">
+          <h3 class="list-group-item-heading">Application name</h3>
+          <p class="list-group-item-text">29 Dec, 12:12:30, 2014</p>
+        </a>
+        <a href="app-detail-log.html" class="list-group-item">
+          <h3 class="list-group-item-heading">Application name</h3>
+          <p class="list-group-item-text">29 Dec, 12:12:30, 2014</p>
+        </a>
+        <a href="app-detail-log.html" class="list-group-item">
+          <h3 class="list-group-item-heading">Application name</h3>
+          <p class="list-group-item-text">29 Dec, 12:12:30, 2014</p>
+        </a>
+
+      </div>
+      <!--           <p><a href="#"><span class="pficon pficon-history"></span> See all notifications</a></p> -->
+    </div><!-- /col -->
+  </div><!-- /row -->
+</div><!-- /container -->
+
 
 <!-- build:js scripts/modules.js -->
 <script src="bower_components/jquery/dist/jquery.js"></script>
 
 <script src="bower_components/angular/angular.js"></script>
 <script src="bower_components/angular-resource/angular-resource.js"></script>
-<script src="bower_components/angular-route/angular-route.js"></script>
-<script src="bower_components/angular-cookies/angular-cookies.js"></script>
-<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="bower_components/angular-router/dist/router.es5.js"></script>
 <script src="bower_components/angular-animate/angular-animate.js"></script>
 
 <script src="bower_components/patternfly/dist/js/patternfly.js"></script>
