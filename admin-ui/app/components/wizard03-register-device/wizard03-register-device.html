@@ -1,0 +1,131 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-8 col-md-9">
+
+
+      <div class="page-header page-header-bleed-right">
+
+        <div class="actions pull-right">
+          <ul class="list-inline">
+            <li><a href="#"><span class="pficon pficon-edit"></span> Edit Name</a></li>
+          </ul>
+        </div>
+
+        <h1>Application Name</h1>
+      </div>
+
+
+      <div class="actions pull-right">
+        <ul class="list-inline">
+          <li><a href="#"><span class="pficon pficon-edit"></span> Edit Variant</a></li>
+        </ul>
+      </div>
+
+      <h2 class="ups-variant-name-header ups-has-icon ups-variant-android">
+        <strong>Name of the variant:</strong>
+        <span class="muted"><i class="fa fa-ban"></i> No installation yet</span>
+      </h2>
+
+      <p><strong>We are half way there!</strong> Use the code snippet bellow to <a href="#">register your device</a> and allow it to receiving notifications through this UnifiedPush Server. If you don't know how to do this, <a href="#">go to the documentation for full sept by step explanation</a>.</p>
+
+      <ol>
+        <li>Copy the code snippet and paste it on your device code.</li>
+        <li>Build and deploy your app.</li>
+        <li>Click <a href="wizard04.html">Continue (Bellow)</a></li>
+      </ol>
+
+
+
+      <div class="ups-snippet">
+        <a href="#" data-toggle="tooltip" data-placement="left" title="Copy to clipboard">Copy</a>
+
+
+<pre class="pre-scrollable prettyprint">
+package com.push.pushapplication;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import org.jboss.aerogear.android.unifiedpush.PushConfig;
+import org.jboss.aerogear.android.unifiedpush.PushRegistrar;
+import org.jboss.aerogear.android.unifiedpush.Registrations;
+
+import android.app.Application;
+
+public class PushApplication extends Application {
+
+    private final String VARIANT_ID       = "7d37fd1a-82c1-48c8-be94-6456f26075fc";
+    private final String SECRET           = "c6dc8b14-0c6f-4f41-8835-2a87827ee1f4";
+    private final String GCM_SENDER_ID    = "33";
+    private final String UNIFIED_PUSH_URL = "http://localhost:8080/ag-push/";
+
+    private PushRegistrar registration;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        Registrations registrations = new Registrations();
+
+        try {
+            PushConfig config = new PushConfig(new URI(UNIFIED_PUSH_URL), GCM_SENDER_ID);
+            config.setVariantID(VARIANT_ID);
+            config.setSecret(SECRET);
+            config.setAlias(MY_ALIAS);
+
+            registration = registrations.push("unifiedpush", config);
+
+            registration.register(getApplicationContext(), new Callback() {
+                private static final long serialVersionUID = 1L;
+
+                @Override
+                public void onSuccess(Void ignore) {
+                     Toast.makeText(MainActivity.this, "Registration Succeeded!",
+                             Toast.LENGTH_LONG).show();
+               }
+
+               @Override
+               public void onFailure(Exception exception) {
+                     Log.e("MainActivity", exception.getMessage(), exception);
+               }
+            });
+
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
+</pre>
+      </div>
+
+      <p>Next we are going to send a test notification. Make sure you <a href="#">build or deploy your app</a> after pasting the snnipet.</p>
+
+      <div class="actions pull-right ups-wizard-actions">
+        <a ng-link="wizard04SendPushNotification" class="btn btn-primary btn-lg">Continue <i class="fa fa-angle-double-right"></i></a>
+      </div>
+
+
+    </div><!-- /col -->
+
+
+    <div class="col-sm-4 col-md-3 sidebar-pf sidebar-pf-right">
+
+      <div class="sidebar-header sidebar-header-bleed-left sidebar-header-bleed-right">
+        <div class="actions pull-right">
+          <a href="#"><a href="app-detail-blank.html">Skip the wizard <i class="fa fa-angle-double-right"></i></a>
+        </div>
+        <h2 class="h5">Wizard steps</h2>
+      </div>
+      <ol class="list-unstyled ups-steps">
+        <li class="done"><strong><i class="fa fa-check"></i></strong> Create your first Application</li>
+        <li class="done"><strong><i class="fa fa-check"></i></strong> Add a variant</li>
+        <li class="active"><strong>3</strong> Mobile device: Set up variant</li>
+        <li><strong>4</strong> Test! Send notification</li>
+        <li><strong>5</strong> Backend: Set up sender API</li>
+      </ol>
+
+
+
+    </div><!-- /col -->
+  </div><!-- /row -->
+</div><!-- /container -->

@@ -1,0 +1,55 @@
+<h3>Sending push notifications</h3>
+<p>Make your backend server send push notifications through this UnifiedPush Server using <a target="_blank" href="https://aerogear.org/docs/unifiedpush/GetStartedwithJavaSender/">Aerogears Java sender API</a>:</p>
+<dl class="dl-horizontal">
+  <dt>Server URL</dt>
+  <dd>http://localhost:8080/ag-push/</dd>
+  <dt>Application ID</dt>
+  <dd>bff6aeb2-6b30-4967-bf0a-9a99d0873a63</dd>
+  <dt>Master Secret</dt>
+  <dd>be608987-a0db-458e-b5cd-62200ed006a8
+    <br /><a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal"><span class="pficon pficon-refresh"></span> Renew Master Secret</a>
+  </dd>
+</dl>
+
+<div class="alert alert-info">
+  <span class="pficon pficon-info"></span>
+  <strong>Keep this info secure!</strong> Never publish your Master Secret or Application ID. <a href="#" class="alert-link">Read more info about this</a>.
+</div>
+
+<ul class="nav nav-tabs nav-tabs-pf">
+  <li class="active"><a href="#">Java Sender API</a></li>
+  <li><a href="#">Node.js Sender API</a></li>
+  <li><a href="#">CURL Sender API</a></li>
+</ul>
+
+
+<h3>Set up Java UPS Sender API</h3>
+<p>You can send notifications to your apps following this 2 stpes. First, on your backend, set up <a target="_blank" href="#">UnifiedPush Server</a>. Second, <a href="#">add a variant</a> and use the snippet on your mobile app to <a href="#">register you device</a>. You can add as many variants as needed. (TODO: improve this text and add links to docs)</p>
+
+
+<div class="ups-snippet">
+  <a href="#" data-toggle="tooltip" data-placement="left" title="Copy to clipboard">Copy</a>
+<pre class="pre-scrollable prettyprint">
+JavaSender defaultJavaSender = new SenderClient.Builder("http://localhost:8080/ag-push/").build();
+UnifiedMessage unifiedMessage = new UnifiedMessage.Builder()
+        .pushApplicationId("bff6aeb2-6b30-4967-bf0a-9a99d0873a63")
+        .masterSecret("be608987-a0db-458e-b5cd-62200ed006a8")
+        .alert("Hello from Java Sender API!")
+        .build();
+defaultJavaSender.send(unifiedMessage, new MessageResponseCallback() {
+
+    @Override
+    public void onComplete(int statusCode) {
+        //do cool stuff
+    }
+
+    @Override
+    public void onError(Throwable throwable) {
+        //bring out the bad news
+    }
+});
+</pre>
+</div>
+
+<h3>Next step:</h3>
+<p>This only appears if there are no devices installed on any variant. If you haven't done it yet, the first step to set up your mobile device is to click on Variants and <a href="#">add a variant</a>. Once you get the variant snippet go and <a target="_blank" href="#">register you device</a>.</p>
