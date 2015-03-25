@@ -49,34 +49,6 @@ angular.module('upsConsole').controller('DetailController',
    * PUBLIC METHODS
    */
 
-  $scope.addVariant = function (variant) {
-    var modalInstance = show('create-variant.html', {
-      variant: function () { return variant; }
-    });
-    modalInstance.result.then(function (result) {
-      var variantData = variantProperties(result.variant);
-      var params = angular.extend({}, {
-        appId: $scope.application.pushApplicationID,
-        variantType: result.variant.type
-      });
-
-      var createFunction = (variantData instanceof FormData) ? variantsEndpoint.createWithFormData : variantsEndpoint.create;
-
-      createFunction(params, variantData, function (newVariant) {
-        var length = application.variants.length;
-        for (var i = 0; i < length; i++) {
-          if (newVariant.type === application.variants[i].type) {
-            break;
-          }
-        }
-        $scope.application.variants.splice(i, 0, newVariant);
-        Notifications.success('Successfully created variant');
-      }, function () {
-        Notifications.error('Unable to add the variant...');
-      });
-    });
-  };
-
   $scope.editVariant = function (variant) {
     variant.protocolType = variant.type.split('windows_')[1];
     var modalInstance = show('create-variant.html', {
@@ -211,64 +183,6 @@ angular.module('upsConsole').controller('DetailController',
 
   function updateCounts() {
     $scope.counts =applicationsEndpoint.count({appId: $scope.application.pushApplicationID});
-  }
-
-  function modalController($scope, $modalInstance, variant) {
-    $scope.variant = variant;
-    if (!$scope.variant) {
-      $scope.variant = {};
-    }
-    $scope.variant.certificates = [];
-
-    $scope.ok = function (variant) {
-      $modalInstance.close({
-        variant: variant
-      });
-    };
-
-    $scope.cancel = function () {
-      $modalInstance.dismiss('cancel');
-    };
-
-    //preview function for the import
-    $scope.previewImport = function() {
-      if (window.File && window.FileList && window.FileReader) {
-        var importFiles = variant.installations[0];
-        var fileReader = new FileReader();
-        fileReader.readAsText(importFiles);
-        fileReader.onload = function(e) {
-          try {
-            $scope.importPreview = JSON.parse(e.target.result).length;
-            $scope.incorrectFormat = false;
-          }
-          catch(e) {
-            $scope.importPreview = null;
-            $scope.incorrectFormat = true;
-          }
-
-        };
-      }
-    };
-
-    // generatePushConfig dialog
-    $scope.variantSelection = {};
-    $scope.toggleSelection = function toggleSelection( variant ) {
-      $scope.variantSelection[variant.type] = variant;
-    };
-    $scope.generatePushConfig = function() {
-      var selectedVariants = Object.keys($scope.variantSelection).map(function (type) {
-        return $scope.variantSelection[type];
-      });
-      return pushConfigGenerator.generate(selectedVariants);
-    };
-    $scope.downloadPushConfig = function() {
-      var pushConfig = $scope.generatePushConfig();
-      var pom = document.createElement('a');
-      pom.setAttribute('href', 'data:application/json;charset=utf-8,' + encodeURIComponent(pushConfig));
-      pom.setAttribute('download', 'push-config.json');
-      pom.click();
-      $scope.cancel();
-    };
   }
 
   function show(template, resolve) {

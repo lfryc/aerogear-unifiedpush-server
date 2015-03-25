@@ -1,5 +1,5 @@
-<div class="actions pull-right ups-main-action">
-  <button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="pficon pficon-add"></span> Add a variant</button>
+<div class="actions pull-right ups-main-action" ng-controller="VariantsController as variants">
+  <button class="btn btn-primary" ng-click="variants.add()"><span class="pficon pficon-add"></span> Add a variant</button>
 </div>
 
 <h3>You have 6 Variants</h3>

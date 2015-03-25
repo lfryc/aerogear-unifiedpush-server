@@ -79,7 +79,7 @@ module.exports = function (grunt) {
         nospawn: true
       },
       babel: {
-        files: '<%= yeoman.app %>/scripts/*.es6',
+        files: '<%= yeoman.app %>/scripts/**/*.es6',
         tasks: ['babel', 'newer:copy:jbossweb']
       },
       less: {
@@ -260,7 +260,7 @@ module.exports = function (grunt) {
             expand: true,
             cwd: '<%= yeoman.app %>',
             dest: '<%= local.jbossweb %>',
-            src: [ '**', '!**/*.txt' ]
+            src: [ '**', '!**/*.txt', '!**/*.es6' ]
           }
         ]
       },
@@ -346,6 +346,7 @@ module.exports = function (grunt) {
       'clean:server',
       'concurrent:server',
       'less',
+      'babel',
       'copy:fonts',
       'copy:jbossweb',
       'autoprefixer',
@@ -362,6 +363,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'less',
+    'babel',
     'copy:fonts',
     'useminPrepare',
     'ngtemplates',

@@ -4,11 +4,11 @@
 (function() {
 
   var app = angular.module('upsConsole', [
-    //'upsConsole.services',
+    'upsConsole.services',
     'ngResource',
     'ngNewRouter',
     'ngAnimate',
-    //'ui.bootstrap',
+    'ui.bootstrap',
     //'ups.directives',
     //'patternfly.notification',
     //'patternfly.autofocus',
