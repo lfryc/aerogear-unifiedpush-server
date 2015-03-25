@@ -1,4 +1,4 @@
-angular.module('upsConsole.appDetail', [])
+angular.module('upsConsole')
   .controller('AppDetailController', function( $routeParams, $modal ) {
 
     this.tab = $routeParams.tab;
@@ -10,7 +10,7 @@ angular.module('upsConsole.appDetail', [])
     this.sendNotification = function() {
       $modal.open({
         templateUrl: 'views/dialogs/send-push-notification.html',
-        controller: 'SendNotificationCtrl as sendNotificationCtrl'
+        controller: 'SendNotificationCtrl'
       });
     };
 

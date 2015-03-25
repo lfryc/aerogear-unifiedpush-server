@@ -22,7 +22,7 @@
       </ul>
 
       <ng-include src="'components/app-detail/include/blank.html'" ng-if="appDetail.tab == 'blank'"></ng-include>
-      <ng-include src="'components/app-detail/include/variants.html'" ng-if="appDetail.tab == 'variants'"></ng-include>
+      <ng-include src="'components/app-detail/include/variants.html'" ng-if="appDetail.tab == 'variants'" ng-controller="VariantsController as variants"></ng-include>
       <ng-include src="'components/app-detail/include/sender.html'" ng-if="appDetail.tab == 'sender'" ng-controller="SenderController as sender"></ng-include>
       <ng-include src="'components/app-detail/include/activity.html'" ng-if="appDetail.tab == 'activity'"></ng-include>
     </div><!-- /col -->

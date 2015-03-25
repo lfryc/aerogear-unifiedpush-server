@@ -1,4 +1,4 @@
-<div class="actions pull-right ups-main-action" ng-controller="VariantsController as variants">
+<div class="actions pull-right ups-main-action">
   <button class="btn btn-primary" ng-click="variants.add()"><span class="pficon pficon-add"></span> Add a variant</button>
 </div>
 
@@ -29,13 +29,13 @@
           </ul>
         </div>
 
-        <h4><i class="fa fa-plus-square-o"></i> Variant Name</h4>
+        <h4 ng-click="variants.toggled = !variants.toggled"><i class="fa fa-plus-square-o"></i> Variant Name</h4>
         <ul class="list-inline">
           <li><i class="fa fa-ban"></i> No installation yet</li>
         </ul>
 
       </div><!-- vaiant header -->
-      <div class="ups-variant-body">
+      <div class="ups-variant-body" ng-show="variants.toggled">
         <p>Google's Cloud Messaging Network (GCM) will be used. To learn more about GCM, visit our Android or Apache Cordova guides for push.</p>
 
         <dl class="dl-horizontal">

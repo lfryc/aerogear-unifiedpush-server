@@ -37,7 +37,7 @@
           <div class="actions">
             <ul class="list-inline">
               <li><a href="#"><span class="pficon pficon-edit"></span> Change name</a></li>
-              <li class="danger"><a href="#"><span class="pficon pficon-delete"></span> Delete</a></li>
+              <li class="danger"><a href="#" ng-click="home.deleteApp()"><span class="pficon pficon-delete"></span> Delete</a></li>
             </ul>
           </div>
 
@@ -223,20 +223,20 @@
         <h2 class="h5">Latest Notifications</h2>
       </div>
       <div class="list-group">
-        <a href="app-detail-log.html" class="list-group-item">
-          <h3 class="list-group-item-heading">Application name</h3>
+        <a ng-link="appDetail({app: '123', tab: 'activity'})" class="list-group-item">
+          <h3 class="list-group-item-heading">Application One</h3>
           <p class="list-group-item-text">29 Dec, 12:12:30, 2014</p>
         </a>
-        <a href="app-detail-log.html" class="list-group-item">
-          <h3 class="list-group-item-heading">Application name</h3>
+        <a ng-link="appDetail({app: '123', tab: 'activity'})" class="list-group-item">
+          <h3 class="list-group-item-heading">Application One</h3>
           <p class="list-group-item-text">29 Dec, 12:12:30, 2014</p>
         </a>
-        <a href="app-detail-log.html" class="list-group-item">
-          <h3 class="list-group-item-heading">Application name</h3>
+        <a ng-link="appDetail({app: '123', tab: 'activity'})" class="list-group-item">
+          <h3 class="list-group-item-heading">Best App ever</h3>
           <p class="list-group-item-text">29 Dec, 12:12:30, 2014</p>
         </a>
-        <a href="app-detail-log.html" class="list-group-item">
-          <h3 class="list-group-item-heading">Application name</h3>
+        <a ng-link="appDetail({app: '123', tab: 'activity'})" class="list-group-item">
+          <h3 class="list-group-item-heading">Application One</h3>
           <p class="list-group-item-text">29 Dec, 12:12:30, 2014</p>
         </a>
 

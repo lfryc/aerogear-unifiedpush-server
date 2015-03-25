@@ -1,7 +1,7 @@
-angular.module('upsConsole.appDetail')
+angular.module('upsConsole')
   .controller('SenderController', function( $modal ) {
     this.renewMasterSecret = function () {
-      var modal = $modal.open({
+      $modal.open({
         templateUrl: 'inline:renew-master-secret.html',
         controller: 'DefaultModalController'
       });

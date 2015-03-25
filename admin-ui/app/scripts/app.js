@@ -13,9 +13,6 @@
     //'patternfly.notification',
     //'patternfly.autofocus',
     //'ngIdle'
-    'upsConsole.home',
-    'upsConsole.appDetail',
-    //'upsConsole.createAppWizard'
   ]);
 
   /**
