@@ -24,16 +24,12 @@
             <button class="btn btn-default" type="button"><span class="fa fa-search"></span></button>
           </div>
         </form>
-
-
-
-
       </div><!-- subheader -->
 
 
       <ul class="media-list ups-app-stream">
 
-        <li class="media">
+        <li class="media" ng-repeat="app in home.apps">
           <div class="actions">
             <ul class="list-inline">
               <li><a href="#"><span class="pficon pficon-edit"></span> Change name</a></li>
@@ -41,139 +37,27 @@
             </ul>
           </div>
 
-
-          <a ng-link="appDetail({app: '123', tab: 'variants'})">
+          <a ng-link="appDetail({app: app.pushApplicationID, tab: 'variants'})">
             <div class="media-left">
-              <div class="app-icon">A</div>
+              <div class="app-icon">{{ app.name | limitTo: 1 }}</div>
             </div>
 
             <div class="media-body">
 
-              <h2 class="media-heading">Application One <small></small></h2>
+              <h2 class="media-heading">{{ app.name }} <small></small></h2>
               <ul class="list-inline">
-                <li><span class="pficon pficon-user"></span> created by  <strong>username</strong></li>
-                <li><i class="fa fa-code-fork"></i> <strong>3</strong> variants</li>
-                <li><span class="pficon pficon-messages"></span> <strong>725</strong> notifications delivered</li>
-                <li><i class="fa fa-mobile"></i> <strong>92</strong> devices registered</li>
+                <li><span class="pficon pficon-user"></span> created by  <strong>{{ app.developer }}</strong></li>
+                <li><i class="fa fa-code-fork"></i> <strong>{{ app.variants.length }}</strong> variants</li>
+                <li><span class="pficon pficon-messages"></span> <strong>???</strong> notifications delivered</li>
+                <li><i class="fa fa-mobile"></i> <strong>???</strong> devices registered</li>
               </ul>
-
 
             </div>
           </a>
 
-        </li>
-
-
-        <li class="media">
-          <div class="actions pull-right">
-            <ul class="list-inline">
-              <li><a href="#"><span class="pficon pficon-edit"></span> Change name</a></li>
-              <li class="danger"><a href="#"><span class="pficon pficon-delete"></span> Delete</a></li>
-            </ul>
-          </div>
-
-          <a href="#">
-            <div class="media-left">
-              <div class="app-icon">N</div>
-            </div>
-
-            <div class="media-body">
-              <h2 class="media-heading">Name of the Application</h2>
-              <ul class="list-inline">
-                <li><span class="pficon pficon-user"></span> created by  <strong>username</strong></li>
-                <li><i class="fa fa-code-fork"></i> <strong>3</strong> variants</li>
-                <li><span class="pficon pficon-messages"></span> <strong>725</strong> notifications delivered</li>
-                <li><i class="fa fa-mobile"></i> <strong>92</strong> devices registered</li>
-              </ul>
-            </div>
-          </a>
-        </li>
-
-
-        <li class="media">
-
-          <div class="actions pull-right">
-            <ul class="list-inline">
-              <li><a href="#"><span class="pficon pficon-edit"></span> Change name</a></li>
-              <li class="danger"><a href="#"><span class="pficon pficon-delete"></span> Delete</a></li>
-            </ul>
-          </div>
-
-          <a href="#">
-            <div class="media-left">
-              <div class="app-icon">B</div>
-            </div>
-
-            <div class="media-body">
-              <h2 class="media-heading">Best App ever</h2>
-              <ul class="list-inline">
-                <li><span class="pficon pficon-user"></span> created by  <strong>username</strong></li>
-                <li><i class="fa fa-code-fork"></i> <strong>3</strong> variants</li>
-                <li><span class="pficon pficon-messages"></span> <strong>725</strong> notifications delivered</li>
-                <li><i class="fa fa-mobile"></i> <strong>92</strong> devices registered</li>
-              </ul>
-            </div>
-          </a>
-        </li>
-
-
-        <li class="media">
-
-          <div class="actions pull-right">
-            <ul class="list-inline">
-              <li><a href="#"><span class="pficon pficon-edit"></span> Change name</a></li>
-              <li class="danger"><a href="#"><span class="pficon pficon-delete"></span> Delete</a></li>
-            </ul>
-          </div>
-
-          <a href="#">
-            <div class="media-left">
-              <div class="app-icon">S</div>
-            </div>
-
-            <div class="media-body">
-              <h2 class="media-heading">Shot n' Share App</h2>
-              <ul class="list-inline">
-                <li><span class="pficon pficon-user"></span> created by  <strong>username</strong></li>
-                <li><i class="fa fa-code-fork"></i> <strong>3</strong> variants</li>
-                <li><span class="pficon pficon-messages"></span> <strong>725</strong> notifications delivered</li>
-                <li><i class="fa fa-mobile"></i> <strong>92</strong> devices registered</li>
-              </ul>
-            </div>
-          </a>
-        </li>
-
-
-
-        <li class="media">
-          <div class="actions">
-            <ul class="list-inline">
-              <li><a href="#"><span class="pficon pficon-edit"></span> Change name</a></li>
-              <li class="danger"><a href="#"><span class="pficon pficon-delete"></span> Delete</a></li>
-            </ul>
-          </div>
-
-          <a href="#">
-            <div class="media-left">
-              <div class="app-icon">T</div>
-            </div>
-
-            <div class="media-body">
-              <h2 class="media-heading">This is my App</h2>
-              <ul class="list-inline">
-                <li><span class="pficon pficon-user"></span> created by  <strong>username</strong></li>
-                <li><i class="fa fa-code-fork"></i> <strong>3</strong> variants</li>
-                <li><span class="pficon pficon-messages"></span> <strong>725</strong> notifications delivered</li>
-                <li><i class="fa fa-mobile"></i> <strong>92</strong> devices registered</li>
-              </ul>
-            </div>
-          </a>
         </li>
 
       </ul>
-
-
-
 
       <ul class="pagination">
         <li>
