@@ -49,6 +49,34 @@ angular.module('upsConsole').controller('DetailController',
    * PUBLIC METHODS
    */
 
+    $scope.addVariant = function (variant) {
+      var modalInstance = show('create-variant.html', {
+        variant: function () { return variant; }
+      });
+      modalInstance.result.then(function (result) {
+        var variantData = variantProperties(result.variant);
+        var params = angular.extend({}, {
+          appId: $scope.application.pushApplicationID,
+          variantType: result.variant.type
+        });
+
+        var createFunction = (variantData instanceof FormData) ? variantsEndpoint.createWithFormData : variantsEndpoint.create;
+
+        createFunction(params, variantData, function (newVariant) {
+          var length = application.variants.length;
+          for (var i = 0; i < length; i++) {
+            if (newVariant.type === application.variants[i].type) {
+              break;
+            }
+          }
+          $scope.application.variants.splice(i, 0, newVariant);
+          Notifications.success('Successfully created variant');
+        }, function () {
+          Notifications.error('Unable to add the variant...');
+        });
+      });
+    };
+
   $scope.editVariant = function (variant) {
     variant.protocolType = variant.type.split('windows_')[1];
     var modalInstance = show('create-variant.html', {

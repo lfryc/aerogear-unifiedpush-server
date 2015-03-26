@@ -3,7 +3,7 @@
 var upsServices = angular.module('upsConsole.services');
 
 upsServices.factory('variantsEndpoint', function ($resource) {
-  return $resource('rest/applications/:appId/:variantType/:variantId/:verb', {
+  var resource = $resource('rest/applications/:appId/:variantType/:variantId/:verb', {
     appId: '@appId',
     variantType: '@variantType',
     variantId: '@variantId'
@@ -41,4 +41,10 @@ upsServices.factory('variantsEndpoint', function ($resource) {
       params: {verb: 'reset'}
     }
   });
+
+  return {
+    create: function() {
+      return resource.create.apply(resource, arguments).$promise;
+    }
+  }
 });

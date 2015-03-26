@@ -30,12 +30,14 @@ upsServices.factory('applicationsEndpoint', function ($resource, $q) {
   });
 
   return {
-    
+
     get: resource.get,
 
     query: resource.query,
 
-    create: resource.create,
+    create: function() {
+      return resource.create.apply(resource, arguments).$promise;
+    },
 
     update: resource.update,
 

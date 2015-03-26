@@ -1,17 +1,21 @@
 angular.module('upsConsole')
-  .controller('Wizard02AddVariantController', function( variantModal, $router, createAppWizard ) {
+  .controller('Wizard03RegisterDeviceController', function( variantModal, $router, createAppWizard ) {
 
     this.canActivate = function() {
       console.log('canActivate');
-      if ( createAppWizard.app ) {
-        return true;
-      } else {
+      if ( !createAppWizard.app ) {
         $router.root.navigate('/wizard/create-app');
         return false;
       }
+      if ( !createAppWizard.variant ) {
+        $router.root.navigate('/wizard/add-variant');
+        return false;
+      }
+      return true;
     };
 
     this.app = createAppWizard.app;
+    this.variant = createAppWizard.variant;
 
     this.addVariant = function() {
       return variantModal.add()

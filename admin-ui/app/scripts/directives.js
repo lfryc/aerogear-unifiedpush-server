@@ -55,21 +55,23 @@ angular.module('ups.directives', ['upsConsole.services'])
     return {
       scope: {
         'files': '=upsFiles',
-        previewImport: '&'
+        'onChange': '&onChange'
       },
       restrict: 'A',
       replace: false,
       link: function ($scope, $element) {
         $element.bind('change', function (e) {
-          while ($scope.files.length > 0) {
-            $scope.files.pop();
-          }
-          for (var i in e.target.files) {
-            if (typeof e.target.files[i] === 'object') {
-              $scope.files.push(e.target.files[i]);
+          $scope.$apply(function() {
+            while ($scope.files.length > 0) {
+              $scope.files.pop();
             }
-          }
-          $scope.previewImport();
+            for (var i in e.target.files) {
+              if (typeof e.target.files[i] === 'object') {
+                $scope.files.push(e.target.files[i]);
+              }
+            }
+            $scope.onChange();
+          });
         });
       }
     };

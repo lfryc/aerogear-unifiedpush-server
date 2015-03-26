@@ -17,13 +17,13 @@
         <p>We will hold your hand and guide you all the way. Sit back and enjoy the ride.</p>
         <p>If you want to read about the process, <a href="#">go to the documentation</a>.</p>
 
-        <form class="form-inline">
+        <form class="form-inline" name="form">
           <div class="form-group">
             <label class="sr-only" for="appname"></label>
-            <input type="text" class="form-control input-lg" id="appname" placeholder="Application name">
+            <input type="text" class="form-control input-lg" placeholder="Application name" required ng-model="wizard01CreateApp.application.name">
           </div>
 
-          <a ng-link="wizard02AddVariant"  class="btn btn-primary btn-lg">Create App</a>
+          <button ng-click="wizard01CreateApp.createApp()"  class="btn btn-primary btn-lg" ng-disabled="form.$invalid">Create App</button>
         </form>
 
 
