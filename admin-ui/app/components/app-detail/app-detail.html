@@ -9,20 +9,19 @@
 
       <div class="ups-app-header">
         <div class="actions pull-right">
-          <button class="btn btn-default" ng-click="appDetail.sendNotification()"><i class="fa fa-paper-plane"></i> Send Notification to this app</button>
+          <button class="btn btn-default" ng-click="appDetail.sendNotification()" ng-disabled="!appDetail.app.variants.length"><i class="fa fa-paper-plane"></i> Send Notification to this app</button>
         </div>
         <h1>{{ appDetail.app.name }}</h1>
       </div><!-- app header -->
 
       <ul class="nav nav-tabs">
         <li ng-class="{ active: appDetail.tab == 'variants' }"><a ng-link="appDetail({app: appDetail.app.pushApplicationID, tab: 'variants'})">Variants</a></li>
-        <li ng-class="{ active: appDetail.tab == 'sender' }"><a ng-link="appDetail({app: appDetail.app.pushApplicationID, tab: 'sender'})">Sender API</a></li>
-        <li ng-class="{ active: appDetail.tab == 'activity' }"><a ng-link="appDetail({app: appDetail.app.pushApplicationID, tab: 'activity'})">Activity log</a></li>
-        <li ng-class="{ active: appDetail.tab == 'blank' }"><a ng-link="appDetail({app: appDetail.app.pushApplicationID, tab: 'blank'})">Blank</a></li>
+        <li ng-class="{ active: appDetail.tab == 'sender' }" ng-if="appDetail.app.variants.length"><a ng-link="appDetail({app: appDetail.app.pushApplicationID, tab: 'sender'})">Sender API</a></li>
+        <li ng-class="{ active: appDetail.tab == 'activity' }"  ng-if="appDetail.app.variants.length"><a ng-link="appDetail({app: appDetail.app.pushApplicationID, tab: 'activity'})">Activity log</a></li>
       </ul>
 
-      <ng-include src="'components/app-detail/include/blank.html'" ng-if="appDetail.tab == 'blank'"></ng-include>
-      <ng-include src="'components/app-detail/include/variants.html'" ng-if="appDetail.tab == 'variants'" ng-controller="VariantsController as variants"></ng-include>
+      <ng-include src="'components/app-detail/include/blank.html'" ng-if="appDetail.tab == 'variants' && !appDetail.app.variants.length" ng-controller="VariantsController as variants"></ng-include>
+      <ng-include src="'components/app-detail/include/variants.html'" ng-if="appDetail.tab == 'variants' && appDetail.app.variants.length" ng-controller="VariantsController as variants"></ng-include>
       <ng-include src="'components/app-detail/include/sender.html'" ng-if="appDetail.tab == 'sender'" ng-controller="SenderController as sender"></ng-include>
       <ng-include src="'components/app-detail/include/activity.html'" ng-if="appDetail.tab == 'activity'"></ng-include>
     </div><!-- /col -->

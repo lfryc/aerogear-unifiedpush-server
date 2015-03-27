@@ -46,9 +46,6 @@ angular.module('upsConsole')
                   variantType: variant.type,
                   variantId: variant.variantID })
               .then(function () {
-                //var indexOfVariant = self.app.variants.findIndex(function( variant ) {
-                //
-                //});
                 self.app.variants = self.app.variants.filter(function( v ) {
                   return v != variant;
                 });
@@ -62,27 +59,6 @@ angular.module('upsConsole')
         }
       });
     };
-
-    //$scope.removeVariant = function (variant) {
-    //  var modalInstance = show('remove-variant.html', {
-    //    variant: function () { return variant; }
-    //  });
-    //  modalInstance.result.then(function (result) {
-    //    var params = angular.extend({}, {
-    //      appId: $scope.application.pushApplicationID,
-    //      variantType: result.variant.type,
-    //      variantId: result.variant.variantID
-    //    });
-    //    variantsEndpoint.remove(params, function () {
-    //      var osVariantsEndpoint = $scope.application.variants;
-    //      osVariantsEndpoint.splice(osVariantsEndpoint.indexOf(variant), 1);
-    //      updateCounts();
-    //      Notifications.success('Successfully removed variant');
-    //    }, function () {
-    //      Notifications.error('Unable to remove the variant...');
-    //    });
-    //  });
-    //};
 
 
   });

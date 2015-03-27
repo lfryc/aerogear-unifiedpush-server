@@ -9,7 +9,10 @@ angular.module('upsConsole')
       return applicationsEndpoint.get({appId: $routeParams.app})
         .then(function( app ) {
           self.app = app;
-        })
+          if ( !app.variants.length ) {
+            self.tab = 'variants';
+          }
+        });
     };
 
     this.sendNotification = function() {
