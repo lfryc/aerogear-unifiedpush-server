@@ -6,11 +6,11 @@ angular.module('upsConsole')
     this.app = $scope.$parent.$parent.appDetail.app;
 
     this.typeEnum = {
-      android:      { name: 'Android' },
-      ios:          { name: 'iOS' },
-      windows:      { name: 'Windows' },
-      simplePush:   { name: 'SimplePush' },
-      adm:          { name: 'ADM' }
+      android:      { name: 'Android',    snippets: ['android', 'cordova'] },
+      ios:          { name: 'iOS',        snippets: ['objc', 'swift']},
+      windows:      { name: 'Windows',    snippets: ['wns', 'mpns', 'cordova'] },
+      simplePush:   { name: 'SimplePush', snippets: ['cordova'] },
+      adm:          { name: 'ADM',        snippets: ['cordova'] }
     };
 
     /* split the variant types to the groups so that they can be easily access */
@@ -59,6 +59,5 @@ angular.module('upsConsole')
         }
       });
     };
-
 
   });

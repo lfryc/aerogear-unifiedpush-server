@@ -93,69 +93,27 @@
           </dd>
         </dl>
 
-        <ul class="nav nav-tabs nav-justified ups-snippet-nav">
-          <li class="active"><a href="#">Android</a></li>
-          <li><a href="#">Cordova</a></li>
+        <ul class="nav nav-tabs nav-justified ups-snippet-nav" ng-if="variants.typeEnum[variant.type].snippets.length">
+          <li ng-repeat="snippet in variants.typeEnum[variant.type].snippets"
+              ng-init="variant.activeSnippet = variants.typeEnum[variant.type].snippets[0]"
+              ng-class="{ active: snippet == variant.activeSnippet }">
+            <a ng-click="variant.activeSnippet = snippet">
+              <span ng-if="snippet == 'android'">Android</span>
+              <span ng-if="snippet == 'simplePush'">JavaScript</span>
+              <span ng-if="snippet == 'ios-objc'">ObjectiveC</span>
+              <span ng-if="snippet == 'ios-swift'">Swift</span>
+              <span ng-if="snippet == 'wns'">C#</span>
+              <span ng-if="snippet == 'mpns'">C#</span>
+              <span ng-if="snippet == 'cordova'">Cordova</span>
+            </a>
+          </li>
         </ul>
 
-        <div class="ups-snippet">
-          <a href="#" data-toggle="tooltip" data-placement="left" title="Copy to clipboard">Copy</a>
-  <pre class="pre-scrollable prettyprint">
-  package com.push.pushapplication;
-
-  import java.net.URI;
-  import java.net.URISyntaxException;
-
-  import org.jboss.aerogear.android.unifiedpush.PushConfig;
-  import org.jboss.aerogear.android.unifiedpush.PushRegistrar;
-  import org.jboss.aerogear.android.unifiedpush.Registrations;
-
-  import android.app.Application;
-
-  public class PushApplication extends Application {
-
-      private final String VARIANT_ID       = "7d37fd1a-82c1-48c8-be94-6456f26075fc";
-      private final String SECRET           = "c6dc8b14-0c6f-4f41-8835-2a87827ee1f4";
-      private final String GCM_SENDER_ID    = "33";
-      private final String UNIFIED_PUSH_URL = "http://localhost:8080/ag-push/";
-
-      private PushRegistrar registration;
-
-      @Override
-      public void onCreate() {
-          super.onCreate();
-
-          Registrations registrations = new Registrations();
-
-          try {
-              PushConfig config = new PushConfig(new URI(UNIFIED_PUSH_URL), GCM_SENDER_ID);
-              config.setVariantID(VARIANT_ID);
-              config.setSecret(SECRET);
-              config.setAlias(MY_ALIAS);
-
-              registration = registrations.push("unifiedpush", config);
-
-              registration.register(getApplicationContext(), new Callback() {
-                  private static final long serialVersionUID = 1L;
-
-                  @Override
-                  public void onSuccess(Void ignore) {
-                       Toast.makeText(MainActivity.this, "Registration Succeeded!",
-                               Toast.LENGTH_LONG).show();
-                 }
-
-                 @Override
-                 public void onFailure(Exception exception) {
-                       Log.e("MainActivity", exception.getMessage(), exception);
-                 }
-              });
-
-          } catch (URISyntaxException e) {
-              throw new RuntimeException(e);
-          }
-      }
-  }
-  </pre>
+        <div class="ups-snippet" ng-if="variants.typeEnum[variant.type].snippets.length">
+          <a data-placement="left" title="Copy to clipboard">Copy</a>
+          <!-- use both ng-if and ng-show prevents screen flickering caused by reinsertion of DOM parts, ng-if turns the invalid sample off to avoid DOM pollution -->
+          <pre class="pre-scrollable prettyprint" ng-if="variants.typeEnum[variant.type].indexOf('android') !== -1" ng-show="variant.activeSnippet == 'android'"><ng-include src="'snippets/android.java'"></ng-include></pre>
+          <pre class="pre-scrollable prettyprint" ng-if="variants.typeEnum[variant.type].indexOf('cordova') !== -1" ng-show="variant.activeSnippet == 'cordova'"><ng-include src="'snippets/cordova.js'"></ng-include></pre>
         </div>
 
       </div><!-- variant content -->
