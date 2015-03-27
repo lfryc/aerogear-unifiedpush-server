@@ -7,6 +7,7 @@ angular.module('upsConsole')
 
     this.activate = function() {
       self.fetchNewPage(1);
+      this.currentPage = 1;
     };
 
     this.pageChanged = function(page) {
@@ -14,17 +15,30 @@ angular.module('upsConsole')
     };
 
     this.fetchNewPage = function(page) {
-      applicationsEndpoint.fetch(page)
+      return applicationsEndpoint.fetch(page)
         .then(function( result ) {
           self.apps = result.apps;
           self.totalItems = result.totalItems;
         });
     };
 
-    this.deleteApp = function() {
+    this.deleteApp = function(app) {
       $modal.open({
         templateUrl: 'views/dialogs/remove-app.html',
-        controller: 'DefaultModalController'
+        controller: function( $modalInstance, $scope ) {
+          $scope.confirm = function() {
+            applicationsEndpoint.delete({appId: app.pushApplicationID})
+              .then(function () {
+                return self.fetchNewPage(self.currentPage);
+              })
+              .then(function() {
+                $modalInstance.close();
+              })
+          };
+          $scope.dismiss = function() {
+            $modalInstance.dismiss('cancel');
+          }
+        }
       });
     };
 

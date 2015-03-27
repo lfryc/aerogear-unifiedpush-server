@@ -35,7 +35,7 @@
           <div class="actions">
             <ul class="list-inline">
               <li><a href="#"><span class="pficon pficon-edit"></span> Change name</a></li>
-              <li class="danger"><a href="#" ng-click="home.deleteApp()"><span class="pficon pficon-delete"></span> Delete</a></li>
+              <li class="danger"><a href="#" ng-click="home.deleteApp( app )"><span class="pficon pficon-delete"></span> Delete</a></li>
             </ul>
           </div>
 
@@ -62,7 +62,9 @@
       </ul>
 
       <pagination items-per-page="8" max-size="5" total-items="home.totalItems"
-                  ng-model="currentPage" ng-change="home.pageChanged(currentPage)"
+                  ng-model="home.currentPage"
+                  ng-change="home.pageChanged(home.currentPage)"
+                  ng-show="home.totalItems / 8 > 1"
                   direction-links="true" boundary-links="false" rotate="false"
                   previous-text="&lsaquo;" next-text="&rsaquo;" class="ups-pagination">
       </pagination>
