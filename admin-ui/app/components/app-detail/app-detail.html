@@ -4,21 +4,21 @@
 
       <ol class="breadcrumb">
         <li><a ng-link="href">Applications</a></li>
-        <li><strong>Application One:</strong> Variants</li>
+        <li><strong>{{ appDetail.app.name }}:</strong> Variants</li>
       </ol>
 
       <div class="ups-app-header">
         <div class="actions pull-right">
           <button class="btn btn-default" ng-click="appDetail.sendNotification()"><i class="fa fa-paper-plane"></i> Send Notification to this app</button>
         </div>
-        <h1>Application One</h1>
+        <h1>{{ appDetail.app.name }}</h1>
       </div><!-- app header -->
 
       <ul class="nav nav-tabs">
-        <li ng-class="{ active: appDetail.tab == 'variants' }"><a ng-link="appDetail({app: appDetail.app.id, tab: 'variants'})">Variants</a></li>
-        <li ng-class="{ active: appDetail.tab == 'sender' }"><a ng-link="appDetail({app: appDetail.app.id, tab: 'sender'})">Sender API</a></li>
-        <li ng-class="{ active: appDetail.tab == 'activity' }"><a ng-link="appDetail({app: appDetail.app.id, tab: 'activity'})">Activity log</a></li>
-        <li ng-class="{ active: appDetail.tab == 'blank' }"><a ng-link="appDetail({app: appDetail.app.id, tab: 'blank'})">Blank</a></li>
+        <li ng-class="{ active: appDetail.tab == 'variants' }"><a ng-link="appDetail({app: appDetail.app.pushApplicationID, tab: 'variants'})">Variants</a></li>
+        <li ng-class="{ active: appDetail.tab == 'sender' }"><a ng-link="appDetail({app: appDetail.app.pushApplicationID, tab: 'sender'})">Sender API</a></li>
+        <li ng-class="{ active: appDetail.tab == 'activity' }"><a ng-link="appDetail({app: appDetail.app.pushApplicationID, tab: 'activity'})">Activity log</a></li>
+        <li ng-class="{ active: appDetail.tab == 'blank' }"><a ng-link="appDetail({app: appDetail.app.pushApplicationID, tab: 'blank'})">Blank</a></li>
       </ul>
 
       <ng-include src="'components/app-detail/include/blank.html'" ng-if="appDetail.tab == 'blank'"></ng-include>

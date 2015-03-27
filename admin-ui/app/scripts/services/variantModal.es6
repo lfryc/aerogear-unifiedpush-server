@@ -2,7 +2,7 @@ angular.module('upsConsole.services').factory('variantModal', function( $modal, 
 
   class VariantModal {
 
-    add() {
+    add( app ) {
       var modal = $modal.open({
         templateUrl: 'views/dialogs/create-variant.html',
         controller: VariantModalController,
@@ -13,9 +13,7 @@ angular.module('upsConsole.services').factory('variantModal', function( $modal, 
           confirm: function () {
             return function ( modal, variantType, variantData ) {
               console.log('confirm');
-              console.log(variantData);
-              console.log(createAppWizard);
-              variantsEndpoint.create( { appId: createAppWizard.app.pushApplicationID, variantType: variantType }, variantData )
+              variantsEndpoint.create( { appId: app.pushApplicationID, variantType: variantType }, variantData )
                 .then(function( variant ) {
                   console.log(variant);
                   modal.close( variant );

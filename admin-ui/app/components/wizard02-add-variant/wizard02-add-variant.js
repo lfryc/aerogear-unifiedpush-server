@@ -14,7 +14,7 @@ angular.module('upsConsole')
     this.app = createAppWizard.app;
 
     this.addVariant = function() {
-      return variantModal.add()
+      return variantModal.add( this.app )
         .then(function( variant ) {
           console.log('success');
           console.log(variant);

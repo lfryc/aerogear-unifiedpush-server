@@ -26,6 +26,7 @@ angular.module('upsConsole')
       $modal.open({
         templateUrl: 'views/dialogs/remove-app.html',
         controller: function( $modalInstance, $scope ) {
+          $scope.app = app;
           $scope.confirm = function() {
             applicationsEndpoint.delete({appId: app.pushApplicationID})
               .then(function () {
