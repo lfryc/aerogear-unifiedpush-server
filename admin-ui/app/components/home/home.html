@@ -59,33 +59,37 @@
 
       </ul>
 
-      <ul class="pagination">
-        <li>
-          <a href="#">
-            <span class="i fa fa-angle-left"></span>
-          </a>
-        </li>
-        <li>
-          <a href="#">1</a>
-        </li>
-        <li>
-          <a href="#">2</a>
-        </li>
-        <li>
-          <a href="#">3</a>
-        </li>
-        <li>
-          <a href="#">4</a>
-        </li>
-        <li>
-          <a href="#">5</a>
-        </li>
-        <li>
-          <a href="#">
-            <span class="i fa fa-angle-right"></span>
-          </a>
-        </li>
-      </ul>
+      current: {{ home.currentPage }} requested: {{ home.requestedPage }}
+
+      <pagination items-per-page="8" direction-links="true" boundary-links="false" total-items="home.totalItems" ng-model="home.requestedPage" previous-text="&lsaquo;" next-text="&rsaquo;" class="ups-pagination" ng-change="home.pageChanged(home.requestedPage)" max-size="5" rotate="false"></pagination>
+
+      <!--<ul class="pagination">-->
+        <!--<li>-->
+          <!--<a href="#">-->
+            <!--<span class="i fa fa-angle-left"></span>-->
+          <!--</a>-->
+        <!--</li>-->
+        <!--<li>-->
+          <!--<a href="#">1</a>-->
+        <!--</li>-->
+        <!--<li>-->
+          <!--<a href="#">2</a>-->
+        <!--</li>-->
+        <!--<li>-->
+          <!--<a href="#">3</a>-->
+        <!--</li>-->
+        <!--<li>-->
+          <!--<a href="#">4</a>-->
+        <!--</li>-->
+        <!--<li>-->
+          <!--<a href="#">5</a>-->
+        <!--</li>-->
+        <!--<li>-->
+          <!--<a href="#">-->
+            <!--<span class="i fa fa-angle-right"></span>-->
+          <!--</a>-->
+        <!--</li>-->
+      <!--</ul>-->
 
     </div><!-- /col -->
 

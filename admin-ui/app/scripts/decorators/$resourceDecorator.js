@@ -7,12 +7,10 @@ angular.module('upsConsole')
      */
     $provide.decorator('$resource', function($delegate) {
       return function decorator(url, paramDefaults, actions) {
-        console.log(actions);
         var wrappedResource = {};
         var originalActions = {};
         var actionsWithoutFunctions = {};
         Object.keys(actions).forEach(function( methodName ) {
-          console.log(methodName);
           var method = actions[methodName];
           originalActions[methodName] = method;
           if (!angular.isFunction(method)) {
@@ -20,10 +18,8 @@ angular.module('upsConsole')
           }
         });
         arguments[2] = actionsWithoutFunctions;
-        console.log(actions);
         var originalResource = $delegate.apply($delegate, arguments);
         Object.keys(originalActions).forEach(function( methodName ) {
-          console.log(methodName);
           var method = originalActions[methodName];
           if (angular.isFunction(method)) {
             wrappedResource[methodName] = method;
