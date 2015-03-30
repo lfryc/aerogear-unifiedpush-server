@@ -1,9 +1,11 @@
 angular.module('upsConsole')
-  .controller('AppDetailController', function( $routeParams, $modal, applicationsEndpoint ) {
+  .controller('AppDetailController', function( $routeParams, $modal, applicationsEndpoint, ContextProvider ) {
 
     var self = this;
 
     this.tab = $routeParams.tab;
+
+    this.contextPath = ContextProvider.contextPath();
 
     this.canActivate = function() {
       return applicationsEndpoint.get({appId: $routeParams.app})

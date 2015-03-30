@@ -1,5 +1,5 @@
 angular.module('upsConsole')
-  .controller('DefaultModalController', function( $scope, $modalInstance, $injector ) {
+  .controller('DefaultModalController', function( $scope, $modalInstance ) {
 
     $scope.confirm = function () {
       $modalInstance.close.apply($modalInstance, arguments);
