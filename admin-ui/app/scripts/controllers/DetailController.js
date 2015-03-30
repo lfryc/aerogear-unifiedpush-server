@@ -19,7 +19,7 @@
 angular.module('upsConsole').controller('DetailController',
   function($rootScope, $routeParams, $location, $modal, $http, applicationsEndpoint, variantsEndpoint,
     importerEndpoint, exporterEndpoint, Notifications, breadcrumbs, application, counts, ContextProvider,
-    metricsEndpoint, pushConfigGenerator) {
+    metricsEndpoint) {
 
   var $scope = this;
 

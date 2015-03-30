@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('upsConsole')
   .controller('AppController', function($router) {
     $router.config([

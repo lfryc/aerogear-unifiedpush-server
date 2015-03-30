@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('upsConsole')
   .controller('DefaultModalController', function( $scope, $modalInstance ) {
 

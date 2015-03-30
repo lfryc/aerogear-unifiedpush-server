@@ -43,11 +43,11 @@ module.exports = function (grunt) {
         //  '<%= yeoman.tmp %>/scripts/**.js': '<%= yeoman.app %>/scripts/**.es6'
         //}
         files: [{
-          "expand": true,
-          "cwd": "<%= yeoman.app %>/scripts/",
-          "src": ["**/*.es6"],
-          "dest": "<%= yeoman.tmp %>/scripts/",
-          "ext": ".js"
+          expand: true,
+          cwd: '<%= yeoman.app %>/scripts/',
+          src: ['**/*.es6'],
+          dest: '<%= yeoman.tmp %>/scripts/',
+          ext: '.js'
         }]
       }
     },

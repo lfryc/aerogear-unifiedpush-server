@@ -114,10 +114,10 @@ angular.module('ups.directives', ['upsConsole.services'])
 
         $scope.cordovaVariantType = (function() {
           switch ($scope.variant.type) {
-            case 'windows_mpns':
-              return 'windows';
-            default:
-              return $scope.variant.type;
+          case 'windows_mpns':
+            return 'windows';
+          default:
+            return $scope.variant.type;
           }
         })();
 

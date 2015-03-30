@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('upsConsole')
   .config(function( $provide ) {
 
@@ -7,9 +9,10 @@ angular.module('upsConsole')
      */
     $provide.decorator('$resource', function($delegate) {
       return function decorator(url, paramDefaults, actions) {
+        var args = Array.prototype.slice.call(arguments);
         var wrappedResource = {};
         var originalActions = {};
-        var actionsWithoutFunctions = {};
+        var actionsWithoutFunctions = args[2] = {};
         Object.keys(actions).forEach(function( methodName ) {
           var method = actions[methodName];
           originalActions[methodName] = method;
@@ -17,8 +20,7 @@ angular.module('upsConsole')
             actionsWithoutFunctions[methodName] = method;
           }
         });
-        arguments[2] = actionsWithoutFunctions;
-        var originalResource = $delegate.apply($delegate, arguments);
+        var originalResource = $delegate.apply($delegate, args);
         Object.keys(originalActions).forEach(function( methodName ) {
           var method = originalActions[methodName];
           if (angular.isFunction(method)) {
@@ -26,11 +28,11 @@ angular.module('upsConsole')
           } else {
             wrappedResource[methodName] = function() {
               return originalResource[methodName].apply(originalResource, arguments).$promise;
-            }
+            };
           }
         });
         return wrappedResource;
-      }
+      };
     });
   });
 
