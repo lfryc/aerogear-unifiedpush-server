@@ -134,6 +134,7 @@ module.exports = function (grunt) {
         },
         src: [
           '<%= local.jbossweb %>/*',
+          '!<%= local.jbossweb %>/config',
           '!<%= local.jbossweb %>/WEB-INF',
           '!<%= local.jbossweb %>/META-INF'
         ]
@@ -233,6 +234,10 @@ module.exports = function (grunt) {
             cwd: '<%= yeoman.app %>',
             dest: '<%= yeoman.dist %>',
             src: [
+              'directives/**',
+              'components/**',
+              'views/**',
+              'snippets/**',
               '*.{ico,txt}',
               '.htaccess',
               'keycloak.json',
@@ -317,6 +322,7 @@ module.exports = function (grunt) {
     ngtemplates:  {
       upsConsole: {
         src: [
+          'components/**.html',
           'directives/**.html',
           'views/**.html',
           'views/dialogs/**.html',
