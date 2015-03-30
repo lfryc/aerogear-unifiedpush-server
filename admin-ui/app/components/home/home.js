@@ -1,13 +1,19 @@
 angular.module('upsConsole')
-  .controller('HomeController', function( $modal, applicationsEndpoint ) {
+  .controller('HomeController', function( $modal, applicationsEndpoint, $router ) {
 
     var self = this;
 
     this.apps = [];
 
-    this.activate = function() {
-      self.fetchNewPage(1);
+    this.canActivate = function() {
       this.currentPage = 1;
+      return self.fetchNewPage(1).then(function() {
+        console.log(self.totalItems);
+        if (self.totalItems < 1) {
+          $router.parent.navigate('/welcome');
+          return false;
+        }
+      });
     };
 
     this.pageChanged = function(page) {
@@ -34,7 +40,10 @@ angular.module('upsConsole')
               })
               .then(function() {
                 $modalInstance.close();
-              })
+                if (self.totalItems < 1) {
+                  $router.parent.navigate('/welcome');
+                }
+              });
           };
           $scope.dismiss = function() {
             $modalInstance.dismiss('cancel');
