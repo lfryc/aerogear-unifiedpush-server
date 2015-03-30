@@ -3,56 +3,78 @@ angular.module('upsConsole.services').factory('variantModal', function( $modal, 
   class VariantModal {
 
     add( app ) {
-      var modal = $modal.open({
+      return $modal.open({
         templateUrl: 'views/dialogs/create-variant.html',
-        controller: VariantModalController,
-        resolve: {
-          variant: function() {
-            return {}
-          }, // for adding we use empty variant
-          confirm: function () {
-            return function ( modal, variantType, variantData ) {
-              console.log('confirm');
-              variantsEndpoint.create( { appId: app.pushApplicationID, variantType: variantType }, variantData )
-                .then(function( variant ) {
-                  console.log(variant);
-                  modal.close( variant );
-                })
-                .catch(function( err ) {
-                  modal.dismiss( err );
-                });
+        controller: function( $scope, $modalInstance) {
+
+          $scope.variant = {}; // start with empty variant
+          $scope.variant.certificates = []; // initialize file list for upload
+
+          $scope.confirm = function () {
+            variantsEndpoint.create( { appId: app.pushApplicationID, variantType: $scope.variant.type }, extractValidVariantData($scope.variant) )
+              .then(function( variant ) {
+                console.log(variant);
+                $modalInstance.close( variant );
+              })
+              .catch(function( err ) {
+                $modalInstance.dismiss( err );
+              });
+          };
+
+          $scope.dismiss = function () {
+            $modalInstance.dismiss('cancel');
+          };
+
+          $scope.validateFileInputs = function() {
+            switch ($scope.variant.type) {
+              case 'ios':
+                return $scope.variant.certificates.length > 0;
             }
-          },
-          dismiss: function () {
-            return function () {
-              modal.dismiss('cancel');
-            }
+            return true;
           }
         }
-      });
-      return modal.result;
+      }).result;
     }
-  }
 
-  function VariantModalController($scope, $modalInstance, variant, confirm, dismiss) {
+    edit( app, variant ) {
+      return $modal.open({
+        templateUrl: 'views/dialogs/create-variant.html',
+        controller: function( $scope, $modalInstance) {
 
-    $scope.variant = variant;
-    $scope.variant.certificates = []; // initialize file list for upload
+          $scope.variant = variant;
+          $scope.variant.certificates = []; // initialize file list for upload
 
-    $scope.confirm = function () {
-      confirm( $modalInstance, $scope.variant.type, extractValidVariantData($scope.variant) );
-    };
+          $scope.confirm = function () {
+            var endpointParams = { appId: app.pushApplicationID, variantType: $scope.variant.type };
+            var variantData = extractValidVariantData($scope.variant);
+            var promise;
+            if (variant.type !== 'ios') {
+              promise = variantsEndpoint.update(endpointParams, variantData);
+            } else {
+              if (variant.certificate) {
+                promise = variantsEndpoint.updateWithFormData(endpointParams, variantData);
+              } else {
+                promise = variantsEndpoint.patch(endpointParams, { name: variant.name, description: variant.description});
+              }
+            }
+            promise.then(function( variant ) {
+              $modalInstance.close( variant );
+            });
+          };
 
-    $scope.dismiss = function () {
-      dismiss( $modalInstance );
-    };
+          $scope.dismiss = function () {
+            $modalInstance.dismiss('cancel');
+          };
 
-    $scope.validateFileInputs = function() {
-      switch ($scope.variant.type) {
-        case 'ios':
-          return $scope.variant.certificates.length > 0;
-      }
-      return true;
+          $scope.validateFileInputs = function() {
+            switch ($scope.variant.type) {
+              case 'ios':
+                return $scope.variant.certificates.length > 0;
+            }
+            return true;
+          }
+        }
+      }).result;
     }
   }
 

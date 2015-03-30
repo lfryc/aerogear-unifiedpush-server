@@ -17,13 +17,12 @@ var app = {
   onDeviceReady: function() {
     app.receivedEvent('deviceready');
     var pushConfig = {
-      pushServerURL: "{{ exampleCtrl.currentLocation }}",
-    {{ exampleCtrl.cordovaVariantType(exampleCtrl.variant) }}: {
-      {{ exampleCtrl.projectNumber(exampleCtrl.variant) }}
-      variantID: "{{ exampleCtrl.variant.variantID }}",
-        variantSecret: "{{ exampleCtrl.variant.secret }}"
-    }
-  };
+      pushServerURL: "{{ contextPath }}",
+      {{ cordovaVariantType }}: { {{ senderID ? '\n        senderID: "' + senderID + '",' : '' }}
+        variantID: "{{ variant.variantID }}",
+        variantSecret: "{{ variant.secret }}"
+      }
+    };
 push.register(app.onNotification, successHandler, errorHandler, pushConfig);
 
 function successHandler() {

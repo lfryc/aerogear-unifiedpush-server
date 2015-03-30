@@ -1,4 +1,4 @@
-curl -u "PushApplicationID:MasterSecret"
+curl -u "{{ appDetail.app.pushApplicationID }}:{{ appDetail.app.masterSecret }}"
    -v -H "Accept: application/json" -H "Content-type: application/json"
    -X POST
    -d '{
@@ -19,4 +19,4 @@ curl -u "PushApplicationID:MasterSecret"
      },
      "simple-push":"version=123"
    }'
-   https://SERVER:PORT/CONTEXT/rest/sender
+   {{ sender.contextPath }}rest/sender

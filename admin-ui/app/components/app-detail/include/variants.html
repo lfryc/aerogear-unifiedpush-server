@@ -93,28 +93,7 @@
           </dd>
         </dl>
 
-        <ul class="nav nav-tabs nav-justified ups-snippet-nav" ng-if="variants.typeEnum[variant.type].snippets.length">
-          <li ng-repeat="snippet in variants.typeEnum[variant.type].snippets"
-              ng-init="variant.activeSnippet = variants.typeEnum[variant.type].snippets[0]"
-              ng-class="{ active: snippet == variant.activeSnippet }">
-            <a ng-click="variant.activeSnippet = snippet">
-              <span ng-if="snippet == 'android'">Android</span>
-              <span ng-if="snippet == 'simplePush'">JavaScript</span>
-              <span ng-if="snippet == 'ios-objc'">ObjectiveC</span>
-              <span ng-if="snippet == 'ios-swift'">Swift</span>
-              <span ng-if="snippet == 'wns'">C#</span>
-              <span ng-if="snippet == 'mpns'">C#</span>
-              <span ng-if="snippet == 'cordova'">Cordova</span>
-            </a>
-          </li>
-        </ul>
-
-        <div class="ups-snippet" ng-if="variants.typeEnum[variant.type].snippets.length">
-          <a data-placement="left" title="Copy to clipboard">Copy</a>
-          <!-- use both ng-if and ng-show prevents screen flickering caused by reinsertion of DOM parts, ng-if turns the invalid sample off to avoid DOM pollution -->
-          <pre class="pre-scrollable prettyprint" ng-if="variants.typeEnum[variant.type].indexOf('android') !== -1" ng-show="variant.activeSnippet == 'android'"><ng-include src="'snippets/android.java'"></ng-include></pre>
-          <pre class="pre-scrollable prettyprint" ng-if="variants.typeEnum[variant.type].indexOf('cordova') !== -1" ng-show="variant.activeSnippet == 'cordova'"><ng-include src="'snippets/cordova.js'"></ng-include></pre>
-        </div>
+        <ups-client-snippets variant="variant"></ups-client-snippets>
 
       </div><!-- variant content -->
     </div><!-- variant -->

@@ -1,7 +1,7 @@
-JavaSender defaultJavaSender = new SenderClient.Builder("{{ exampleCtrl.currentLocation }}").build();
+JavaSender defaultJavaSender = new SenderClient.Builder("{{ sender.contextPath }}").build();
 UnifiedMessage unifiedMessage = new UnifiedMessage.Builder()
-        .pushApplicationId("{{ exampleCtrl.applicationId }}")
-        .masterSecret("{{ exampleCtrl.application.masterSecret }}")
+        .pushApplicationId("{{ appDetail.app.pushApplicationID }}")
+        .masterSecret("{{ appDetail.app.masterSecret }}")
         .alert("Hello from Java Sender API!")
         .build();
 defaultJavaSender.send(unifiedMessage, new MessageResponseCallback() {

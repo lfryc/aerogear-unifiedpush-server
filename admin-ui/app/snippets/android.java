@@ -11,10 +11,10 @@ import android.app.Application;
 
 public class PushApplication extends Application {
 
-    private final String VARIANT_ID       = "{{ exampleCtrl.variant.variantID }}";
-    private final String SECRET           = "{{ exampleCtrl.variant.secret }}";
-    private final String GCM_SENDER_ID    = "{{ exampleCtrl.variant.projectNumber }}";
-    private final String UNIFIED_PUSH_URL = "{{ exampleCtrl.currentLocation }}";
+    private final String VARIANT_ID       = "{{ variant.variantID }}";
+    private final String SECRET           = "{{ variant.secret }}";
+    private final String GCM_SENDER_ID    = "{{ variant.projectNumber }}";
+    private final String UNIFIED_PUSH_URL = "{{ contextPath }}";
 
     private PushRegistrar registration;
 

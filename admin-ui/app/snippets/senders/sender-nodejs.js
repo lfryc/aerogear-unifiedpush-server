@@ -1,8 +1,8 @@
 var agSender = require( "unifiedpush-node-sender" ),
   settings = {
-    url: "http://localhost:8080/ag-push",
-    applicationId: "12345",
-    masterSecret: "123456"
+    url: "{{ sender.contextPath }}",
+    applicationId: "{{ appDetail.app.pushApplicationID }}",
+    masterSecret: "{{ appDetail.app.masterSecret }}"
   };
 
 agSender.Sender( settings ).send( message, options ).on( "success", function( response ) {

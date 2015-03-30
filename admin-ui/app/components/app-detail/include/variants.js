@@ -5,14 +5,6 @@ angular.module('upsConsole')
 
     this.app = $scope.$parent.$parent.appDetail.app;
 
-    this.typeEnum = {
-      android:      { name: 'Android',    snippets: ['android', 'cordova'] },
-      ios:          { name: 'iOS',        snippets: ['objc', 'swift']},
-      windows:      { name: 'Windows',    snippets: ['wns', 'mpns', 'cordova'] },
-      simplePush:   { name: 'SimplePush', snippets: ['cordova'] },
-      adm:          { name: 'ADM',        snippets: ['cordova'] }
-    };
-
     /* split the variant types to the groups so that they can be easily access */
     function splitByType( variants ) {
       return variants
@@ -33,6 +25,10 @@ angular.module('upsConsole')
           self.app.variants.push( variant );
           self.byType = splitByType( self.app.variants );
         });
+    };
+
+    this.edit = function( variant ) {
+      return variantModal.edit( this.app, variant)
     };
 
     this.delete = function( variant ) {

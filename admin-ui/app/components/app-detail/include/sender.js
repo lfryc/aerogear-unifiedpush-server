@@ -1,9 +1,11 @@
 angular.module('upsConsole')
-  .controller('SenderController', function( $modal, $scope, applicationsEndpoint ) {
+  .controller('SenderController', function( $modal, $scope, applicationsEndpoint, ContextProvider ) {
 
     var self = this;
 
     this.app = $scope.$parent.$parent.appDetail.app;
+
+    this.contextPath = ContextProvider.contextPath();
 
     this.renewMasterSecret = function () {
       $modal.open({
