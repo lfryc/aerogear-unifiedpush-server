@@ -9,14 +9,17 @@ angular.module('upsConsole')
 
     this.canActivate = function() {
       this.currentPage = 1;
+      return self.fetchNewPage(1)
+        .then(function() {
+          if (self.totalItems < 1) {
+            $router.parent.navigate('/welcome');
+            return false;
+          }
+        });
+    };
+
+    this.activate = function() {
       return $q.all([
-        self.fetchNewPage(1)
-          .then(function() {
-            if (self.totalItems < 1) {
-              $router.parent.navigate('/welcome');
-              return false;
-            }
-          }),
         dashboardEndpoint.totals()
           .then(function( data ) {
             self.stats = data;
