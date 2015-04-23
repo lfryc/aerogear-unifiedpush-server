@@ -10,8 +10,7 @@ angular.module('upsConsole')
       {path: '/wizard/register-device',  component: 'wizard03RegisterDevice'},
       {path: '/wizard/send-push-notification',  component: 'wizard04SendPushNotification'},
       {path: '/wizard/setup-sender',  component: 'wizard05SetupSender'},
-      {path: '/wizard/setup-sender',  component: 'wizard06Done'},
-      {path: '/wizard/setup-sender',  component: 'wizard06Done'},
+      {path: '/wizard/done',  component: 'wizard06Done'},
       {path: '/app/:app/:tab',        component: 'appDetail'},
     ]);
   });

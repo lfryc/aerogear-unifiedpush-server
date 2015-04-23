@@ -13,12 +13,12 @@
           </ul>
         </div>
 
-        <h1>Application Name</h1>
+        <h1>{{ wizard04SendPushNotification.app.name }}</h1>
       </div>
 
 
-      <h2 class="ups-variant-name-header ups-has-icon ups-variant-android">
-        <strong>Name of the variant:</strong>
+      <h2 class="ups-variant-name-header ups-has-icon ups-variant-{{ wizard04SendPushNotification.variant.type }}">
+        <strong>{{ wizard04SendPushNotification.variant.name }}:</strong>
         <span><i class="fa fa-check"></i> Successful installation</span>
       </h2>
 
@@ -29,11 +29,11 @@
       <form>
         <div class="form-group">
           <label for="inputPassword3" class="control-label">Message</label>
-          <textarea class="form-control" rows="3">Hello! This is my first notification to Name of the variant.</textarea>
+          <textarea class="form-control" rows="3" ng-model="wizard04SendPushNotification.pushData.message.alert"></textarea>
         </div>
 
         <div class="form-group pull-right">
-          <a ng-link="wizard05SetupSender" type="submit" class="btn btn-primary btn-lg">Send Push Notification and Continue <i class="fa fa-angle-double-right"></i></a>
+          <button class="btn btn-primary btn-lg" ng-click="wizard04SendPushNotification.sendNotification()">Send Push Notification and Continue <i class="fa fa-angle-double-right"></i></button>
         </div>
       </form>
 
