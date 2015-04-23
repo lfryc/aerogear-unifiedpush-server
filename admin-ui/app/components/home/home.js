@@ -1,5 +1,5 @@
 angular.module('upsConsole')
-  .controller('HomeController', function( $q, $modal, $router, applicationsEndpoint, dashboardEndpoint ) {
+  .controller('HomeController', function( $q, $modal, $router, $rootScope, applicationsEndpoint, dashboardEndpoint ) {
 
     var self = this;
 
@@ -44,6 +44,7 @@ angular.module('upsConsole')
           $scope.confirm = function() {
             applicationsEndpoint.delete({appId: app.pushApplicationID})
               .then(function () {
+                $rootScope.$broadcast('upsApplicationDeleted');
                 return self.fetchNewPage(self.currentPage);
               })
               .then(function() {

@@ -60,6 +60,7 @@ angular.module('upsConsole')
     updateStats();
     $scope.$on('upsUpdateStats', updateStats);
     $scope.$on('upsApplicationCreated', updateStats);
+    $scope.$on('upsApplicationDeleted', updateStats);
 
     // load warnings and update them periodically and when notification is sent
     function updateWarnings() {
