@@ -4,7 +4,6 @@ angular.module('upsConsole')
     var self = this;
 
     this.apps = [];
-    this.stats = {};
     this.topNotifications = [];
 
     this.canActivate = function() {
@@ -19,16 +18,10 @@ angular.module('upsConsole')
     };
 
     this.activate = function() {
-      return $q.all([
-        dashboardEndpoint.totals()
-          .then(function( data ) {
-            self.stats = data;
-          }),
-        dashboardEndpoint.latestActiveApps()
-          .then(function( data ) {
-            self.topNotifications = data;
-          })
-      ]);
+      dashboardEndpoint.latestActiveApps()
+        .then(function( data ) {
+          self.topNotifications = data;
+        });
     };
 
     this.pageChanged = function(page) {

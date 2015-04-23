@@ -47,7 +47,9 @@
           START HERE
         </a>
       </p>
-      <p><a ng-link="home">Skip the wizard</a></p>
+      <p ng-if="app.stats.applications > 0">
+        <a ng-link="home">Skip the wizard</a>
+      </p>
     </div><!-- col -->
 
 

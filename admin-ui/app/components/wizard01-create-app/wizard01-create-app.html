@@ -37,8 +37,8 @@
     <div class="col-sm-4 col-md-3 sidebar-pf sidebar-pf-right">
 
       <div class="sidebar-header sidebar-header-bleed-left sidebar-header-bleed-right">
-        <div class="actions pull-right">
-          <a href="#"><a ng-link="home">Skip the wizard <i class="fa fa-angle-double-right"></i></a>
+        <div class="actions pull-right" ng-if="app.stats.applications > 0">
+          <a ng-link="home">Skip the wizard <i class="fa fa-angle-double-right"></i></a>
         </div>
         <h2 class="h5">Wizard steps</h2>
       </div>

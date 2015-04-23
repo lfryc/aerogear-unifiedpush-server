@@ -49,6 +49,18 @@ angular.module('upsConsole')
       });
     };
 
+
+    this.stats = {};
+    function updateStats() {
+      dashboardEndpoint.totals()
+        .then(function( data ) {
+          self.stats = data;
+        });
+    }
+    updateStats();
+    $scope.$on('upsUpdateStats', updateStats);
+    $scope.$on('upsApplicationCreated', updateStats);
+
     // load warnings and update them periodically and when notification is sent
     function updateWarnings() {
       dashboardEndpoint.warnings().then(function( warnings ) {
