@@ -99,4 +99,18 @@ angular.module('ups.directives', ['upsConsole.services'])
       restrict: 'E',
       templateUrl: 'directives/ups-client-snippets.html'
     };
+  })
+
+  .directive('upsSenderSnippets', function () {
+    return {
+      scope: {
+        app: '=',
+        activeSnippet: '@'
+      },
+      controller: function( $scope, ContextProvider ) {
+        $scope.contextPath = ContextProvider.contextPath();
+      },
+      restrict: 'E',
+      templateUrl: 'directives/ups-sender-snippets.html'
+    };
   });

@@ -1,4 +1,4 @@
-curl -u "{{ appDetail.app.pushApplicationID }}:{{ appDetail.app.masterSecret }}"
+curl -u "{{ app.pushApplicationID }}:{{ app.masterSecret }}"
    -v -H "Accept: application/json" -H "Content-type: application/json"
    -X POST
    -d '{
@@ -19,4 +19,4 @@ curl -u "{{ appDetail.app.pushApplicationID }}:{{ appDetail.app.masterSecret }}"
      },
      "simple-push":"version=123"
    }'
-   {{ sender.contextPath }}rest/sender
+   {{ contextPath }}rest/sender

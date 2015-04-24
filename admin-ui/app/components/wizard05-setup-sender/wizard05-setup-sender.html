@@ -27,31 +27,10 @@
         <dt>Master Secret</dt>
         <dd>{{ wizard05SetupSender.app.masterSecret }}</dd>
       </dl>
-      <div class="ups-snippet">
-        <a href="#" data-toggle="tooltip" data-placement="left" title="Copy to clipboard">Copy</a>
-<pre class="pre-scrollable prettyprint">
-JavaSender defaultJavaSender = new SenderClient.Builder("{{ wizard05SetupSender.contextPath }}").build();
-UnifiedMessage unifiedMessage = new UnifiedMessage.Builder()
-        .pushApplicationId("{{ wizard05SetupSender.app.pushApplicationID }}")
-        .masterSecret("{{ wizard05SetupSender.app.masterSecret }}")
-        .alert("Hello from Java Sender API!")
-        .build();
-defaultJavaSender.send(unifiedMessage, new MessageResponseCallback() {
 
-    @Override
-    public void onComplete(int statusCode) {
-        //do cool stuff
-    }
+      <ups-sender-snippets app="wizard05SetupSender.app"></ups-sender-snippets>
 
-    @Override
-    public void onError(Throwable throwable) {
-        //bring out the bad news
-    }
-});
-</pre>
-      </div>
-
-      <p>If you have questions about this process, <a href="#">visit the documentation for full sept by step explanation</a>.</p>
+      <p>If you have questions about this process, <a href="https://aerogear.org/docs/unifiedpush/ups_userguide/index/">visit the documentation for full step by step explanation</a>.</p>
 
 
       <div class="actions pull-right ups-wizard-actions">
