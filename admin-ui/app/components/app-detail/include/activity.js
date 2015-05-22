@@ -1,5 +1,5 @@
 angular.module('upsConsole')
-  .controller('ActivityController', function ( $modal, variantModal, $scope, metricsEndpoint ) {
+  .controller('ActivityController', function ( $scope, metricsEndpoint ) {
 
     var self = this;
 
