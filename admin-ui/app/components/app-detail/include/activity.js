@@ -3,7 +3,10 @@ angular.module('upsConsole')
 
     var self = this;
 
-    this.app = $scope.$parent.$parent.appDetail.app;
+    this.app = {
+      pushApplicationID: 'xyz'
+    };
+    
     this.metrics = [];
     this.totalCount = 0;
     this.currentPage = 1;
