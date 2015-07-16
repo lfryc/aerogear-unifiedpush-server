@@ -80,12 +80,63 @@ angular.module('upsConsole')
     };
   })
 
-  .directive('upsClientSnippets', function () {
+  .factory('SnippetRetriever', function($http, $templateCache, $q) {
     return {
+      get: function( snippetUrl ) {
+        var cacheResult = $templateCache.get( snippetUrl );
+        if ( cacheResult ) {
+          return $q.when( { data: cacheResult } );
+        }
+        $http.get( snippetUrl )
+          .then(function( response ) {
+            $templateCache.put( snippetUrl, response.data );
+          });
+      }
+    };
+  })
+
+  .factory('SnippetService', function(SnippetRetriever, $q) {
+    var snippets = {
+      'android': { url: 'snippets/register-device/android.java' },
+      'cordova': { url: 'snippets/register-device/cordova.js' },
+      'ios_objc': { url: 'snippets/register-device/ios.objc' },
+      'ios_swift': { url: 'snippets/register-device/ios.swift' },
+      'mpns': { url: 'snippets/register-device/mpns.cs' },
+      'wns': { url: 'snippets/register-device/wns.cs' }
+    };
+    var promises = {};
+    angular.forEach(snippets, function (value, key) {
+      promises[key] = SnippetRetriever.get(value.url)
+        .then(function(response){
+          snippets[key].template = response.data;
+        });
+    });
+    return {
+      populate: function (result) {
+        return $q.all(promises)
+          .then(function () {
+            angular.forEach(snippets, function (value, key) {
+              if (!result[key]) {
+                result[key] = {};
+              }
+              if (!result[key].template) {
+                result[key].template = value.template;
+              }
+            });
+            return result;
+          });
+      }
+    };
+  })
+
+  .directive('upsClientSnippets', function (SnippetService) {
+    return {
+      templateUrl: 'directives/ups-client-snippets.html',
       scope: {
         variant: '='
       },
-      controller: function( $scope, ContextProvider, $http, $sce, $interpolate, $timeout ) {
+      restrict: 'E',
+      controller: function( $scope, ContextProvider, SnippetRetriever, $sce, $interpolate, $timeout ) {
         $scope.clipText = $sce.trustAsHtml('Copy to clipboard');
         $scope.contextPath = ContextProvider.contextPath();
         $scope.typeEnum = {
@@ -99,20 +150,15 @@ angular.module('upsConsole')
         $scope.state = {
           activeSnippet: $scope.typeEnum[$scope.variant.type].snippets[0]
         };
-        $scope.snippets = {
-          'android': { url: 'snippets/register-device/android.java' },
-          'cordova': { url: 'snippets/register-device/cordova.js' },
-          'ios_objc': { url: 'snippets/register-device/ios.objc' },
-          'ios_swift': { url: 'snippets/register-device/ios.swift' },
-          'mpns': { url: 'snippets/register-device/mpns.cs' },
-          'wns': { url: 'snippets/register-device/wns.cs' }
-        };
-        angular.forEach($scope.snippets, function(value, key) {
-          $http.get( value.url )
-            .then(function( response ) {
-              $scope.snippets[key].source = $interpolate(response.data)($scope);
+        $scope.snippets = {};
+        function renderSnippets() {
+          SnippetService.populate($scope.snippets).then(function() {
+            angular.forEach($scope.snippets, function(value, key) {
+              $scope.snippets[key].source = $interpolate($scope.snippets[key].template)($scope);
             });
-        });
+          });
+        }
+        renderSnippets();
         $scope.copySnippet = function() {
           return $scope.snippets[$scope.state.activeSnippet].source;
         };
@@ -131,9 +177,10 @@ angular.module('upsConsole')
           }
         })();
         $scope.senderID = $scope.variant.type === 'android' ? $scope.variant.projectNumber : null;
-      },
-      restrict: 'E',
-      templateUrl: 'directives/ups-client-snippets.html'
+        $scope.$watch('variant.secret', function() {
+          renderSnippets();
+        });
+      }
     };
   })
 
@@ -143,7 +190,7 @@ angular.module('upsConsole')
         app: '=',
         activeSnippet: '@'
       },
-      controller: function( $scope, ContextProvider, $http, $sce, $interpolate, $timeout ) {
+      controller: function( $scope, ContextProvider, SnippetRetriever, $sce, $interpolate, $timeout ) {
         $scope.activeSnippet = $scope.activeSnippet || 'java';
         $scope.clipText = $sce.trustAsHtml('Copy to clipboard');
         $scope.contextPath = ContextProvider.contextPath();
@@ -153,7 +200,7 @@ angular.module('upsConsole')
           curl: { url: 'snippets/senders/sender-curl.sh' }
         };
         angular.forEach($scope.snippets, function(value, key) {
-          $http.get( value.url )
+          SnippetRetriever.get( value.url )
             .then(function( response ) {
               $scope.snippets[key].source = $interpolate(response.data)($scope);
             });
@@ -236,9 +283,9 @@ angular.module('upsConsole')
               $scope.var = $element.html();
               $element.html(prettyPrintOne($element.html(), '', false));
             });
-            unwatch();
           }
         });
+        $scope.$on('$destroy', unwatch);
       }
     };
   });

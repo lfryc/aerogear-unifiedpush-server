@@ -40,7 +40,6 @@ import org.jboss.aerogear.unifiedpush.service.metrics.PushMessageMetricsService;
 import org.jboss.aerogear.unifiedpush.test.archive.UnifiedPushArchive;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -50,8 +49,7 @@ public class TestMetricsCollector extends AbstractJMSTest {
 
     @Deployment
     public static WebArchive archive() {
-        return ShrinkWrap
-                .create(UnifiedPushArchive.class)
+        return UnifiedPushArchive.forTestClass(TestMetricsCollector.class)
                 .withMessaging()
                     .addClasses(MetricsCollector.class)
                     .addClasses(PushMessageMetricsService.class)
@@ -82,12 +80,15 @@ public class TestMetricsCollector extends AbstractJMSTest {
         VariantMetricInformation variant1Metric1 = new VariantMetricInformation();
         variant1Metric1.setPushMessageInformation(pushMetric);
         variant1Metric1.setVariantID(variantID1);
+        variant1Metric1.setServedBatches(1);
         VariantMetricInformation variant1Metric2 = new VariantMetricInformation();
         variant1Metric2.setPushMessageInformation(pushMetric);
         variant1Metric2.setVariantID(variantID1);
+        variant1Metric2.setServedBatches(1);
         VariantMetricInformation variant2Metric1 = new VariantMetricInformation();
         variant2Metric1.setPushMessageInformation(pushMetric);
         variant2Metric1.setVariantID(variantID2);
+        variant2Metric1.setServedBatches(1);
         when(pushMessageInformationDao.find(pushMetric.getId())).thenReturn(pushMetric);
 
         // when
