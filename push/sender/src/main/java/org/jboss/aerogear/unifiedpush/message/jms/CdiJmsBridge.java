@@ -20,8 +20,10 @@ import javax.annotation.Resource;
 import javax.enterprise.event.Observes;
 import javax.jms.Queue;
 
+import org.hornetq.api.core.Message;
 import org.jboss.aerogear.unifiedpush.message.event.AllBatchesLoadedEvent;
 import org.jboss.aerogear.unifiedpush.message.event.BatchLoadedEvent;
+import org.jboss.aerogear.unifiedpush.message.event.TriggerMetricCollection;
 
 /**
  * A CDI-to-JMS bridge takes some selected CDI events and passes them to JMS messaging system so that they can be handled asynchronously.
@@ -34,11 +36,18 @@ public class CdiJmsBridge extends AbstractJMSMessageProducer {
     @Resource(mappedName = "java:/queue/BatchLoadedQueue")
     private Queue batchLoadedQueue;
 
+    @Resource(mappedName = "java:/queue/TriggerMetricCollectionQueue")
+    private Queue triggerMetricCollectionQueue;
+
     public void queueMessage(@Observes @DispatchToQueue AllBatchesLoadedEvent msg) {
         sendTransacted(allBatchesLoaded, msg, "variantID", msg.getVariantID());
     }
 
     public void queueMessage(@Observes @DispatchToQueue BatchLoadedEvent msg) {
         sendTransacted(batchLoadedQueue, msg, "variantID", msg.getVariantID());
+    }
+
+    public void queueMessage(@Observes @DispatchToQueue TriggerMetricCollection msg) {
+        sendNonTransacted(triggerMetricCollectionQueue, msg, Message.HDR_DUPLICATE_DETECTION_ID.toString(), msg.getPushMessageInformationId());
     }
 }
