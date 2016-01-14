@@ -36,6 +36,7 @@ import org.jboss.aerogear.unifiedpush.dao.ResultsStream;
 import org.jboss.aerogear.unifiedpush.message.configuration.SenderConfiguration;
 import org.jboss.aerogear.unifiedpush.message.event.AllBatchesLoadedEvent;
 import org.jboss.aerogear.unifiedpush.message.event.BatchLoadedEvent;
+import org.jboss.aerogear.unifiedpush.message.event.TriggerMetricCollection;
 import org.jboss.aerogear.unifiedpush.message.holder.MessageHolderWithTokens;
 import org.jboss.aerogear.unifiedpush.message.holder.MessageHolderWithVariants;
 import org.jboss.aerogear.unifiedpush.message.jms.Dequeue;
@@ -74,6 +75,10 @@ public class TokenLoader {
     @Inject
     @DispatchToQueue
     private Event<AllBatchesLoadedEvent> allBatchesLoaded;
+
+    @Inject
+    @DispatchToQueue
+    private Event<TriggerMetricCollection> triggerMetricCollection;
 
     @Inject
     @DispatchToQueue
@@ -129,6 +134,7 @@ public class TokenLoader {
                         dispatchTokensEvent.fire(new MessageHolderWithTokens(msg.getPushMessageInformation(), message, variant, tokens, ++serialId));
                         logger.fine(String.format("Loaded batch #%s for %s variant (%s)", serialId, variant.getType().getTypeName(), variant.getVariantID()));
                         batchLoaded.fire(new BatchLoadedEvent(variant.getVariantID()));
+                        triggerMetricCollection.fire(new TriggerMetricCollection(msg.getPushMessageInformation()));
                     } else {
                         break;
                     }
@@ -140,6 +146,7 @@ public class TokenLoader {
                 } else {
                     logger.fine(String.format("All batches for %s variant were loaded (%s)", variant.getType().getTypeName(), msg.getPushMessageInformation().getId()));
                     allBatchesLoaded.fire(new AllBatchesLoadedEvent(variant.getVariantID()));
+                    triggerMetricCollection.fire(new TriggerMetricCollection(msg.getPushMessageInformation()));
 
                     if (tokensLoaded == 0 && lastTokenFromPreviousBatch == null) {
                         // no tokens were loaded at all!
