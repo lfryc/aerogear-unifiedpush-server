@@ -238,6 +238,7 @@ public class JmsClient {
                 throw new NullPointerException("duplicateDetectionId");
             }
             this.properties.put("_HQ_DUPL_ID", duplicateDetectionId);
+            this.properties.put("_AMQ_DUPL_ID", duplicateDetectionId);
             return this;
         }
 
@@ -249,6 +250,7 @@ public class JmsClient {
                 throw new NullPointerException("delayMs");
             }
             this.properties.put("_HQ_SCHED_DELIVERY", new Long(System.currentTimeMillis() + delayMs));
+            this.properties.put("_AMQ_SCHED_DELIVERY", new Long(System.currentTimeMillis() + delayMs));
             return this;
         }
 
