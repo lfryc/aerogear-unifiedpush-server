@@ -4,9 +4,9 @@ batch
 /subsystem=messaging-activemq/server=default/address-setting=jms.queue.TriggerMetricCollectionQueue:remove()
 /subsystem=messaging-activemq/server=default/address-setting=jms.queue.GCMTokenBatchQueue:remove()
 
-/subsystem=messaging-activemq/server=default/connection-factory=InVmConnectionFactory:write-attribute(name=min-large-message-size, value=102400)
-/subsystem=messaging-activemq/server=default/pooled-connection-factory=activemq-ra:write-attribute(name=min-large-message-size,value=102400)
-/subsystem=messaging-activemq/server=default/connection-factory=RemoteConnectionFactory:write-attribute(name=min-large-message-size,value=102400)
+#/subsystem=messaging-activemq/server=default/connection-factory=InVmConnectionFactory:write-attribute(name=min-large-message-size, value=102400)
+#/subsystem=messaging-activemq/server=default/pooled-connection-factory=activemq-ra:write-attribute(name=min-large-message-size,value=102400)
+#/subsystem=messaging-activemq/server=default/connection-factory=RemoteConnectionFactory:write-attribute(name=min-large-message-size,value=102400)
 
 
 run-batch
