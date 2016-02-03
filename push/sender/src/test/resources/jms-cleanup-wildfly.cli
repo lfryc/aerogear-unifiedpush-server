@@ -1,12 +1,13 @@
 connect
+
+/subsystem=logging/logger=org.jboss.aerogear.unifiedpush:remove()
+/subsystem=logging/console-handler=AEROGEAR:remove()
+
 batch
 
-#/subsystem=logging/logger=org.jboss.aerogear.unifiedpush:remove()
-#/subsystem=logging/console-handler=AEROGEAR:remove()
-
-/subsystem=messaging-activemq/server=default/address-setting=jms.queue.GCMPushMessageQueue:remove()
+/subsystem=messaging-activemq/server=default/address-setting=jms.queue.*PushMessageQueue:remove()
+/subsystem=messaging-activemq/server=default/address-setting=jms.queue.*TokenBatchQueue:remove()
 /subsystem=messaging-activemq/server=default/address-setting=jms.queue.TriggerMetricCollectionQueue:remove()
-/subsystem=messaging-activemq/server=default/address-setting=jms.queue.GCMTokenBatchQueue:remove()
 
 #/subsystem=messaging-activemq/server=default/connection-factory=InVmConnectionFactory:write-attribute(name=min-large-message-size, value=102400)
 #/subsystem=messaging-activemq/server=default/pooled-connection-factory=activemq-ra:write-attribute(name=min-large-message-size,value=102400)
