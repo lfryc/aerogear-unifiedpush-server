@@ -16,6 +16,20 @@
  */
 package org.jboss.aerogear.unifiedpush.message;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+
+import javax.annotation.Resource;
+import javax.ejb.EJBContext;
+import javax.ejb.Stateless;
+import javax.enterprise.event.Event;
+import javax.enterprise.event.Observes;
+import javax.enterprise.inject.Any;
+import javax.enterprise.inject.Instance;
+import javax.inject.Inject;
+
 import org.jboss.aerogear.unifiedpush.api.Variant;
 import org.jboss.aerogear.unifiedpush.api.VariantMetricInformation;
 import org.jboss.aerogear.unifiedpush.api.VariantType;
@@ -25,6 +39,7 @@ import org.jboss.aerogear.unifiedpush.message.configuration.SenderConfiguration;
 import org.jboss.aerogear.unifiedpush.message.event.AllBatchesLoadedEvent;
 import org.jboss.aerogear.unifiedpush.message.event.BatchLoadedEvent;
 import org.jboss.aerogear.unifiedpush.message.event.TriggerMetricCollection;
+import org.jboss.aerogear.unifiedpush.message.exception.MessageDeliveryException;
 import org.jboss.aerogear.unifiedpush.message.holder.MessageHolderWithTokens;
 import org.jboss.aerogear.unifiedpush.message.holder.MessageHolderWithVariants;
 import org.jboss.aerogear.unifiedpush.message.jms.Dequeue;
@@ -32,17 +47,6 @@ import org.jboss.aerogear.unifiedpush.message.jms.DispatchToQueue;
 import org.jboss.aerogear.unifiedpush.message.sender.SenderTypeLiteral;
 import org.jboss.aerogear.unifiedpush.service.ClientInstallationService;
 import org.jboss.aerogear.unifiedpush.utils.AeroGearLogger;
-
-import javax.ejb.Stateless;
-import javax.enterprise.event.Event;
-import javax.enterprise.event.Observes;
-import javax.enterprise.inject.Any;
-import javax.enterprise.inject.Instance;
-import javax.inject.Inject;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * Receives a request for sending a push message to given variants from {@link NotificationRouter}.
@@ -85,6 +89,9 @@ public class TokenLoader {
 
     @Inject @Any
     private Instance<SenderConfiguration> senderConfiguration;
+
+    @Resource
+    private EJBContext context;
 
     /**
      * Receives request for processing a {@link UnifiedPushMessage} and loads tokens for devices that match requested parameters from database.
@@ -131,7 +138,15 @@ public class TokenLoader {
                         tokensLoaded += 1;
                     }
                     if (tokens.size() > 0) {
-                        dispatchTokensEvent.fire(new MessageHolderWithTokens(msg.getPushMessageInformation(), message, variant, tokens, ++serialId));
+                        try {
+                            dispatchTokensEvent.fire(new MessageHolderWithTokens(msg.getPushMessageInformation(), message, variant, tokens, ++serialId));
+                        } catch (MessageDeliveryException e) {
+                            Throwable cause = e.getCause();
+                            if (cause.getMessage() != null && cause.getMessage().contains("is full")) {
+                                context.setRollbackOnly();
+                                return;
+                            }
+                        }
                         logger.info(String.format("Loaded batch #%s, containing %d tokens, for %s variant (%s)", serialId, tokens.size() ,variant.getType().getTypeName(), variant.getVariantID()));
 
                         // using combined key of variant and PMI (AGPUSH-1585):
