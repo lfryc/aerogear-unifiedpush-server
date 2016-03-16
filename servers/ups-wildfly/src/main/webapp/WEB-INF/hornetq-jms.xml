@@ -75,6 +75,11 @@
             <jms-queue name="AllBatchesLoadedQueue">
                 <entry name="/queue/AllBatchesLoadedQueue"/>
             </jms-queue>
+            
+            <!-- Badge Leading Queue -->
+            <jms-queue name="APNsBadgeLeaseQueue">
+                <entry name="/queue/APNsBadgeLeaseQueue"/>
+            </jms-queue>
         </jms-destinations>
     </server>
 </messaging-deployment>
