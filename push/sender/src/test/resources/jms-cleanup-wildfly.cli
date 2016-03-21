@@ -1,7 +1,7 @@
 connect
 
-#/subsystem=logging/logger=org.jboss.aerogear.unifiedpush:remove()
-#/subsystem=logging/console-handler=AEROGEAR:remove()
+/subsystem=logging/logger=org.jboss.aerogear.unifiedpush:remove()
+/subsystem=logging/console-handler=AEROGEAR:remove()
 
 batch
 
