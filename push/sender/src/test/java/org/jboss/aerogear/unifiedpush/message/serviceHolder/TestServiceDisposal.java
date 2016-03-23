@@ -5,30 +5,41 @@ import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.mock;
 
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.jboss.aerogear.unifiedpush.message.serviceHolder.DisposableReference;
-import org.jboss.aerogear.unifiedpush.message.serviceHolder.ServiceDestroyer;
-import org.jboss.aerogear.unifiedpush.message.serviceHolder.ServiceDisposalScheduler;
-import org.junit.After;
+import javax.inject.Inject;
+
+import org.jboss.aerogear.unifiedpush.test.archive.UnifiedPushArchive;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
-public class TestAbstractServiceHolder {
+@RunWith(Arquillian.class)
+public class TestServiceDisposal {
 
-    private ServiceDisposalScheduler scheduler = new ServiceDisposalScheduler();
     private ServiceDestroyer<Object> mockDestroyer;
     private Object instance = new Object();
 
-    @Before
-    public void setUp() {
-        scheduler.initialize();
-        mockDestroyer = mock(ServiceDestroyer.class);
+    @Deployment
+    public static WebArchive archive() {
+        return UnifiedPushArchive.forTestClass(TestAbstractServiceHolderClustered.class)
+                .withMessaging()
+                    .addPackage(ServiceDisposalScheduler.class.getPackage())
+                    .deleteClass(ApnsServiceHolder.class)
+                .withMockito()
+                .as(WebArchive.class);
     }
 
-    @After
-    public void tearDown() {
-        scheduler.terminate();
+    @Inject
+    private ServiceDisposalScheduler scheduler;
+
+    @Before
+    public void setUp() {
+        mockDestroyer = mock(ServiceDestroyer.class);
     }
 
     @Test
@@ -74,19 +85,21 @@ public class TestAbstractServiceHolder {
         latch.await();
     }
 
-    @Test(timeout = 2000)
-    public void test_disposing_gracefully_when_terminated() {
+    @Test(timeout = 3000)
+    public void test_disposing_gracefully_when_terminated() throws InterruptedException {
         final int numberOfInstances = 100;
         final AtomicInteger numberOfInstancesTerminatedGracefully = new AtomicInteger();
+        final CountDownLatch latch = new CountDownLatch(numberOfInstances);
         ServiceDestroyer<Object> serviceDestroyer = new ServiceDestroyer<Object>() {
             public void destroy(Object instance) {
                 numberOfInstancesTerminatedGracefully.incrementAndGet();
+                latch.countDown();
             };
         };
         for (int i = 0; i < numberOfInstances; i++) {
             scheduler.scheduleForDisposal(new DisposableReference<Object>(instance, serviceDestroyer), 100); // delay  is lesser than termination timeout
         }
-        scheduler.terminate();
+        latch.await(2, TimeUnit.SECONDS);
         assertEquals("all instances should be terminated gracefully", numberOfInstances, numberOfInstancesTerminatedGracefully.get());
     }
 }
