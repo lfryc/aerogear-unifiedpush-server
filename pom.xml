@@ -82,11 +82,11 @@
             <!-- JBoss distributes a complete set of Java EE 6 APIs including a Bill of Materials (BOM). A BOM specifies the versions
                 of a "stack" (or a collection) of artifacts. We use this here so that we always get the correct versions of artifacts.
                 Here we use
-                the jboss-javaee-6.0 stack (you can read this as the JBoss stack of the Java EE 6 APIs) -->
+                the jboss-javaee-7.0 stack (you can read this as the JBoss stack of the Java EE 6 APIs) -->
             <dependency>
-                <groupId>org.jboss.bom</groupId>
-                <artifactId>jboss-javaee-6.0-with-hibernate</artifactId>
-                <version>${jboss-javaee-6.0.version}</version>
+                <groupId>org.jboss.spec</groupId>
+                <artifactId>jboss-javaee-7.0</artifactId>
+                <version>${jboss-javaee-7.0.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -156,7 +156,7 @@
 
         <!-- Define the version of JBoss' Java EE 6 APIs we want to import. Any dependencies from org.jboss.spec will have their
             version defined by this BOM -->
-        <jboss-javaee-6.0.version>1.0.7.Final</jboss-javaee-6.0.version>
+        <jboss-javaee-7.0.version>1.0.3.Final</jboss-javaee-7.0.version>
 
         <!--
             Options to override the compiler arguments directly on the compiler arument line to separate between what
